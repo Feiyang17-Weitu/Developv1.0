@@ -1,17 +1,46 @@
 package safe17.weitudevelop;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+
+
+
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
+    //登录监听类，用来判断密码是否正确
+    class LoginClickListener implements View.OnClickListener
+    {
+        @Override
+        public void onClick(View view)
+        {
+             /*    密码正确的情况下* if()
+        {*/
+            Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
+            startActivity(LoginIntent);
+        /*}
+         else if () 假密码的情况下
+         {
+         }
+         else  错误密码的情况下
+         */
+        }
+    }
+
+        @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button btnlogin = (Button) findViewById(R.id.BtnLogin);
+        btnlogin.setOnClickListener(new LoginClickListener());
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -35,3 +64,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
+
