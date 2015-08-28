@@ -9,6 +9,7 @@
     android:background="@mipmap/bg_home"
     tools:context=".MainActivity">
 
+
     <ImageView
         android:id="@+id/title_welcome"
         android:layout_width="160dp"

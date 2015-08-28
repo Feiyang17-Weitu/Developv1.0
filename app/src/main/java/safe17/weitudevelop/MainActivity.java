@@ -1,17 +1,19 @@
 package safe17.weitudevelop;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 
 
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     //登录监听类，用来判断密码是否正确
     class LoginClickListener implements View.OnClickListener
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         Button btnlogin = (Button) findViewById(R.id.BtnLogin);
         btnlogin.setOnClickListener(new LoginClickListener());
     }
