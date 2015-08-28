@@ -3,6 +3,8 @@
     <string name="hello_world">Hello world!</string>
     <string name="loginpage_exit">退出</string>
     <string name="password">输入密码</string>
+    <string name="wel_init">请创建密码：</string>
+    <string name="wel">请输入密码：</string>
     <string name="title_activity_power_on">唯图-主界面</string>
     <string name="entry">进入维图</string>
 
