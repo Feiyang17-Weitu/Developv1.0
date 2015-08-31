@@ -4,6 +4,25 @@
     android:layout_height="match_parent"  tools:context=".MainActivity"
     android:background="@android:color/white">
 
+    <FrameLayout
+        style="@style/TitleBar"
+        android:id="@+id/title_bar">
+        <ImageButton
+            android:id="@+id/btnDrawer"
+            style="@style/TitleBarLeftIcon"
+            android:src="@mipmap/icon_edit"
+            android:background="@mipmap/icon_edit"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView
+            style="@style/Title"
+            android:text="@string/my_weitu"
+            />
+
+    </FrameLayout>
+
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent" android:layout_height="match_parent">
         <FrameLayout
@@ -41,12 +60,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+    android:layout_height="fill_parent"
+    android:layout_marginTop="59dp">
 
     <FrameLayout
         android:id="@+id/fragment_layout"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" >
+        android:layout_height="fill_parent">
+
     </FrameLayout>
     <RelativeLayout
         android:id="@+id/menu_layout_left"

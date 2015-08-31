@@ -18,11 +18,17 @@
         android:src="@mipmap/welcome"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/weitu_round"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="140dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/title"
@@ -30,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/wel_init"
             android:textSize="18sp"
+            android:textColor="@android:color/white"
             android:gravity="center"/>
 
         <EditText
@@ -39,6 +46,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:layout_marginTop="15dp"
+            android:background="@drawable/shape_round_rect"
             android:textSize="18sp"
             android:gravity="center"
             android:inputType="numberPassword"
@@ -50,6 +58,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:layout_marginTop="15dp"
+            android:background="@drawable/shape_round_rect"
             android:textSize="18sp"
             android:gravity="center"
             android:inputType="numberPassword"
@@ -60,10 +69,11 @@
             android:layout_height="40dp"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
+            android:background="@drawable/shape_round_rect_blue"
             android:layout_marginTop="15dp"
             android:text="@string/entry"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             />
 
     </LinearLayout>
