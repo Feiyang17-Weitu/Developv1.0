@@ -1,8 +1,12 @@
 package safe17.weitudevelop;
 
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 //import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ListView;
@@ -13,12 +17,28 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PowerOnActivity extends FragmentActivity {
 
     public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于" };
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
+
+    private String data[][] = new String[][]{{"相册1","4张照片"},
+            {"相册2","5张照片"},{"默认相册","1张照片"}};
+
+    private List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+
+    private ListView photoList;
+    private SimpleAdapter simpleAdapter;
+
+    private ImageView add_album;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +51,22 @@ public class PowerOnActivity extends FragmentActivity {
 
         //监听菜单
         menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
+
+        photoList = (ListView) findViewById(R.id.photo_list);
+        add_album = (ImageView) findViewById(R.id.add_album);
+        add_album.setOnClickListener(new onClickLisentertmp());
+        for(int x=0;x < this.data.length;x++){
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("album_name", String.valueOf(this.data[x][0]));
+            map.put("photo_num", String.valueOf(this.data[x][1]));
+            this.list.add(map);
+        }
+
+        this.simpleAdapter = new SimpleAdapter(this, this.list, R.layout.photo_list,
+                new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
+        this.photoList.setAdapter(this.simpleAdapter);
+        this.photoList.setOnItemClickListener(new onItemClickedListenertmp());
+
     }
 
     /*左侧列表点击事件*/
@@ -57,6 +93,42 @@ public class PowerOnActivity extends FragmentActivity {
             ft.replace(R.id.fragment_layout, fragment);
             ft.commit();
             mDrawer_layout.closeDrawer(mMenu_layout_left);//关闭mMenu_layout
+        }
+
+    }
+
+    private class onClickLisentertmp implements View.OnClickListener {
+
+        @Override
+        public void onClick(View v) {
+            // TODO Auto-generated method stub
+            switch (v.getId()) {
+                case R.id.add_album://添加相册
+
+                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
+                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+    }
+
+    private class onItemClickedListenertmp implements OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // TODO Auto-generated method stub
+            Map<String, String> map = (Map<String, String>)PowerOnActivity.
+                    this.simpleAdapter.getItem(position);
+            String album_name = map.get("album_name");
+
+            Intent main_photo = new Intent(PowerOnActivity.this, photo_view.class);
+            main_photo.putExtra("album_name", album_name);
+            PowerOnActivity.this.startActivity(main_photo);
         }
 
     }
