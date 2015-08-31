@@ -1,12 +1,13 @@
 <resources>
-    <string name="app_name">唯图-登录</string>
+    <string name="app_name">唯图</string>
     <string name="hello_world">Hello world!</string>
     <string name="loginpage_exit">退出</string>
     <string name="password">输入密码</string>
     <string name="wel_init">请创建密码：</string>
     <string name="wel">请输入密码：</string>
     <string name="title_activity_power_on">唯图-主界面</string>
-    <string name="entry">进入维图</string>
+    <string name="entry">进入唯图</string>
+    <string name="my_weitu">唯图相册</string>
 
 
 </resources>
