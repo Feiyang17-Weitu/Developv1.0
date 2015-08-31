@@ -33,7 +33,7 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="@android:color/holo_red_light">
+        android:background="#4F94CD">
         <ListView
             android:id="@+id/menu_listView_l"
             android:layout_width="match_parent"

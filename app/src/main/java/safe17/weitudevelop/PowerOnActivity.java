@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 
 public class PowerOnActivity extends FragmentActivity {
 
-    public static final String[] TITLES = { "First", "Second" };
+    public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于" };
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
 
