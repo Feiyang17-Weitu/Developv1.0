@@ -18,11 +18,17 @@
         android:src="@mipmap/welcome"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@mipmap/weitu_round"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="140dp"
         android:orientation="vertical">
         <TextView
             android:id="@+id/title"
