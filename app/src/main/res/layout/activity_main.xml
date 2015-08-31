@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/wel_init"
             android:textSize="18sp"
+            android:textColor="@android:color/white"
             android:gravity="center"/>
 
         <EditText
@@ -45,6 +46,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:layout_marginTop="15dp"
+            android:background="@drawable/shape_round_rect"
             android:textSize="18sp"
             android:gravity="center"
             android:inputType="numberPassword"
@@ -56,6 +58,7 @@
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
             android:layout_marginTop="15dp"
+            android:background="@drawable/shape_round_rect"
             android:textSize="18sp"
             android:gravity="center"
             android:inputType="numberPassword"
@@ -66,10 +69,11 @@
             android:layout_height="40dp"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
+            android:background="@drawable/shape_round_rect_blue"
             android:layout_marginTop="15dp"
             android:text="@string/entry"
             android:textSize="18sp"
-            android:textColor="@android:color/black"
+            android:textColor="@android:color/white"
             />
 
     </LinearLayout>
