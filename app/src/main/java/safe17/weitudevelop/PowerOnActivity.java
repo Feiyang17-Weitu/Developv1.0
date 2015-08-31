@@ -16,7 +16,7 @@ import android.widget.AdapterView;
 
 public class PowerOnActivity extends FragmentActivity {
 
-    public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于" };
+    public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
 
@@ -46,11 +46,22 @@ public class PowerOnActivity extends FragmentActivity {
             switch (position)
             {
                 case 0:
-                    fragment = new FirstFragment();
+                    fragment = new ModifyPasswordFragment();
                     break;
                 case 1:
-                    fragment = new SecondFragment();
+                    fragment = new ModifyFakePasswordFragment();
                     break;
+                case 2:
+                    fragment = new FeedBackFragment();
+                    break;
+                case 3:
+                    fragment = new AboutUsFragment();
+                    break;
+                case 4:
+                {
+                    System.exit(0);
+                    break;
+                }
                 default:
                     break;
             }
