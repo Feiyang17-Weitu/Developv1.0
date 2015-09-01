@@ -1,4 +1,4 @@
-package safe17.weitudevelop;
+package safe17.weitudevelop.fragment;
 
 /**
  * Created by wangxubing on 2015/8/29.
@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import safe17.weitudevelop.R;
 
 public class ModifyFakePasswordFragment extends Fragment {
 
