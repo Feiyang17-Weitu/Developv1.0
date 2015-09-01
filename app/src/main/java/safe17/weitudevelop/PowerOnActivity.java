@@ -125,7 +125,6 @@ public class PowerOnActivity extends FragmentActivity {
             }
             ft.replace(R.id.fragment_layout, fragment);
             ft.commit();
-            mDrawer_layout.closeDrawer(mMenu_layout_left);
             mDrawer_layout.closeDrawer(mMenu_layout_left);//关闭mMenu_layout
         }
 
