@@ -1,10 +1,12 @@
-package safe17.weitudevelop;
+package safe17.weitudevelop.adapter;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+
+import java.util.List;
 
 public class ImageAdapter extends BaseAdapter {
 
