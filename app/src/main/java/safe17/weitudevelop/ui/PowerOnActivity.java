@@ -1,10 +1,8 @@
-package safe17.weitudevelop;
+package safe17.weitudevelop.ui;
 
 import android.app.AlertDialog;
-import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.view.Menu;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,7 +25,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PowerOnActivity extends FragmentActivity {
+import safe17.weitudevelop.R;
+import safe17.weitudevelop.fragment.AboutUsFragment;
+import safe17.weitudevelop.fragment.DefaultFragment;
+import safe17.weitudevelop.fragment.FeedBackFragment;
+import safe17.weitudevelop.fragment.ModifyFakePasswordFragment;
+import safe17.weitudevelop.fragment.ModifyPasswordFragment;
+
+
+public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
     public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
    private DrawerLayout mDrawer_layout;//DrawerLayout容器
@@ -38,10 +44,11 @@ public class PowerOnActivity extends FragmentActivity {
 
     private List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
-    private ListView photoList;
     private SimpleAdapter simpleAdapter;
 
     private ImageView add_album;
+
+    private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +62,7 @@ public class PowerOnActivity extends FragmentActivity {
         //监听菜单
         menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
 
-        photoList = (ListView) findViewById(R.id.photo_list);
+        //photoList = (ListView) findViewById(R.id.photo_list);
         add_album = (ImageView) findViewById(R.id.add_album);
         add_album.setOnClickListener(new onClickLisentertmp());
         for(int x=0;x < this.data.length;x++){
@@ -67,9 +74,6 @@ public class PowerOnActivity extends FragmentActivity {
 
         this.simpleAdapter = new SimpleAdapter(this, this.list, R.layout.photo_list,
                 new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
-        this.photoList.setAdapter(this.simpleAdapter);
-        this.photoList.setOnItemClickListener(new onItemClickedListenertmp());
-
 
         ImageButton btndrawer=(ImageButton)findViewById(R.id.btnDrawer);
 
@@ -83,11 +87,42 @@ public class PowerOnActivity extends FragmentActivity {
                 else
                 {
                     mDrawer_layout.openDrawer(mMenu_layout_left);
+                    mDrawer_layout.bringToFront();
+//                    photoList.setVisibility(View.GONE);
                 }
              //   Toast.makeText(getApplicationContext(), "呵呵！", Toast.LENGTH_LONG).show();
             }
         });
 
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawer_layout,         /* DrawerLayout object */
+                R.mipmap.ic_launcher,  /* nav drawer image to replace 'Up' caret */
+                R.string.abc_action_bar_home_description,  /* "open drawer" description for accessibility */
+                R.string.abc_action_bar_home_description  /* "close drawer" description for accessibility */
+        ) {
+            public void onDrawerClosed(View view) {
+                //getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                //getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+                mDrawer_layout.bringToFront();
+            }
+        };
+        mDrawer_layout.setDrawerListener(mDrawerToggle);
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment =  new DefaultFragment();
+        ft.replace(R.id.fragment_layout, fragment);
+        ft.commit();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(this, "item click", Toast.LENGTH_LONG).show();
     }
 
     /*左侧列表点击事件*/
@@ -145,23 +180,6 @@ public class PowerOnActivity extends FragmentActivity {
                 default:
                     break;
             }
-        }
-
-    }
-
-    private class onItemClickedListenertmp implements OnItemClickListener{
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            // TODO Auto-generated method stub
-            Map<String, String> map = (Map<String, String>)PowerOnActivity.
-                    this.simpleAdapter.getItem(position);
-            String album_name = map.get("album_name");
-
-            Intent main_photo = new Intent(PowerOnActivity.this, photo_view.class);
-            main_photo.putExtra("album_name", album_name);
-            PowerOnActivity.this.startActivity(main_photo);
         }
 
     }

@@ -1,4 +1,4 @@
-package safe17.weitudevelop;
+package safe17.weitudevelop.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +15,10 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
-public class photo_view extends Activity {
+import safe17.weitudevelop.R;
+import safe17.weitudevelop.adapter.ImageAdapter;
+
+public class PhotoViewActivity extends Activity {
 
     private TextView title = null;
 
@@ -39,14 +41,9 @@ public class photo_view extends Activity {
         String album_name = it.getStringExtra("album_name");
         this.title.setText(album_name);
 
-
-
-
         this.myGridView = (GridView)super.findViewById(R.id.myGridView);
         this.myGridView.setAdapter(new ImageAdapter(this, this.picRes));
-
         this.myGridView.setOnItemClickListener(new OnItemClickListenertmp());
-
 
     }
 
@@ -56,11 +53,11 @@ public class photo_view extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             // TODO Auto-generated method stub
-            ImageView showimg = new ImageView(photo_view.this);
+            ImageView showimg = new ImageView(PhotoViewActivity.this);
             showimg.setScaleType(ImageView.ScaleType.CENTER);
             showimg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-            showimg.setImageResource(photo_view.this.picRes[position]);
-            Dialog dialog = new AlertDialog.Builder(photo_view.this)
+            showimg.setImageResource(PhotoViewActivity.this.picRes[position]);
+            Dialog dialog = new AlertDialog.Builder(PhotoViewActivity.this)
                     .setIcon(R.mipmap.ic_launcher).setTitle("查看图片").setView(showimg)
                     .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
 

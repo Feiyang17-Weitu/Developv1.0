@@ -1,4 +1,4 @@
-package safe17.weitudevelop;
+package safe17.weitudevelop.ui;
 
 import android.content.Context;
 import android.app.Activity;
@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import safe17.weitudevelop.R;
 
 public class MainActivity extends Activity {
     private TextView myTextView;
