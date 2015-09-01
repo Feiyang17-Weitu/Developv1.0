@@ -4,13 +4,26 @@
     <FrameLayout
         style="@style/TitleBar"
         android:id="@+id/title_bar">
+        <ImageButton
+            android:id="@+id/btnDrawer"
+            style="@style/TitleBarLeftIcon"
+            android:background="@mipmap/list"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            />
         <TextView
             style="@style/Title"
             android:text="@string/my_weitu"
+            android:layout_marginRight="10dp"
             />
         <ImageView
-            style="@style/TitleBarLeftIcon"
-            android:src="@mipmap/icon_edit"
+            android:id="@+id/add_album"
+            android:src="@mipmap/icon_add"
+            style="@style/TitleBarRightIcon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
             />
     </FrameLayout>
 </LinearLayout>

@@ -10,20 +10,24 @@
         <ImageButton
             android:id="@+id/btnDrawer"
             style="@style/TitleBarLeftIcon"
-            android:src="@mipmap/icon_edit"
-            android:background="@mipmap/icon_edit"
+            android:background="@mipmap/list"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
             />
         <TextView
             style="@style/Title"
             android:text="@string/my_weitu"
+            android:layout_marginRight="10dp"
             />
         <ImageView
-            android:onClick="true"
-            style="@style/TitleBarRightIcon"
             android:id="@+id/add_album"
-            android:src="@android:drawable/ic_input_add"/>
+            android:src="@mipmap/icon_add"
+            style="@style/TitleBarRightIcon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            />
 
     </FrameLayout>
 
@@ -58,11 +62,11 @@
         android:layout_width="300dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
-        android:background="#4F94CD">
+        android:background="#616161">
         <ListView
             android:id="@+id/menu_listView_l"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
         </ListView>
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

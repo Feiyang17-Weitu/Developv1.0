@@ -7,7 +7,7 @@
     <style name="TitleBar" >
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">59dp</item>
-        <item name="android:background">#0b71a5</item>
+        <item name="android:background">#1694d4</item>
         <item name="android:layout_alignParentTop">true</item>
     </style>
 
