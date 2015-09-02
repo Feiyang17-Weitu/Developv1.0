@@ -13,6 +13,7 @@
             android:layout_marginLeft="10dp"
             />
         <TextView
+            android:id="@+id/bar_title"
             style="@style/Title"
             android:text="@string/my_weitu"
             android:layout_marginRight="10dp"

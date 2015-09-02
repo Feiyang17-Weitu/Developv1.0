@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.view.Window;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.ImageAdapter;
@@ -35,11 +36,11 @@ public class PhotoViewActivity extends Activity {
         super.setContentView(R.layout.main_photo);
 //        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
 
-        this.title = (TextView)super.findViewById(R.id.title);
+        this.title = (TextView)super.findViewById(R.id.bar_title);
 
         Intent it = super.getIntent();
-        String album_name = it.getStringExtra("album_name");
-        this.title.setText(album_name);
+       // String album_name = it.getStringExtra("album_name");
+       // this.title.setText(album_name);
 
         this.myGridView = (GridView)super.findViewById(R.id.myGridView);
         this.myGridView.setAdapter(new ImageAdapter(this, this.picRes));
