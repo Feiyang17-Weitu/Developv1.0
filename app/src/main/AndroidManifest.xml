@@ -24,6 +24,10 @@
             android:name=".ui.PhotoViewActivity"
             android:label="@string/title_activity_power_on" >
         </activity>
+        <activity
+            android:name=".ui.AddAlbumActivity"
+            android:label="@string/title_activity_power_on" >
+        </activity>
 
     </application>
 

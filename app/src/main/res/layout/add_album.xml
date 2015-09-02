@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    tools:context=".MainActivity">
+
+    <include
+        layout="@layout/titlebar"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="相册名："
+            android:textSize="18sp"
+            android:layout_gravity="left"/>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:layout_marginTop="15dp"
+            android:textSize="18sp" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="设置隐私相册："
+            android:textSize="18sp"
+            android:layout_gravity="left"/>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="false"
+                android:text="已婚"
+                ></CheckBox>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="是否设置为隐私相册"
+
+                android:textSize="18sp"
+                android:layout_gravity="left"/>
+
+        </LinearLayout>
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"/>
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="35dp"
+            android:layout_marginRight="35dp"
+            android:background="@drawable/shape_round_rect_blue"
+            android:layout_marginTop="15dp"
+            android:text="完成"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

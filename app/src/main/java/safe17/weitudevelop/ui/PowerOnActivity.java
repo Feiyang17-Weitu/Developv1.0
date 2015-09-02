@@ -1,6 +1,9 @@
 package safe17.weitudevelop.ui;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.view.Menu;
@@ -167,21 +170,26 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
 
     private class onClickLisentertmp implements View.OnClickListener {
 
-        @Override
-        public void onClick(View v) {
-            // TODO Auto-generated method stub
-            switch (v.getId()) {
-                case R.id.add_album://添加相册
 
-                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
-                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();
-                    break;
+//        public void onClick(View v) {
+//            // TODO Auto-generated method stub
+//            switch (v.getId()) {
+//                case R.id.add_album://添加相册
+//
+//                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
+//                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();
+//                    break;
+//
+//                default:
+//                    break;
+//            }
+//        }
+    @Override
+        public void onClick(View view) {
 
-                default:
-                    break;
-            }
+                    Intent LoginIntent = new Intent(PowerOnActivity.this, AddAlbumActivity.class);
+                    startActivity(LoginIntent);
         }
-
     }
 
     @Override
