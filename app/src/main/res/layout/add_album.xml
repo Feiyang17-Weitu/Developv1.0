@@ -5,9 +5,34 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity">
+    <FrameLayout
+        style="@style/TitleBar"
+        android:id="@+id/title_bar">
 
-    <include
-        layout="@layout/titlebar"/>
+        <ImageButton
+            android:id="@+id/navigation_back"
+            style="@style/TitleBarLeftIcon"
+            android:background="@mipmap/navigation_back"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="10dp"
+            />
+        <TextView
+            android:id="@+id/bar_title"
+            style="@style/Title"
+            android:text="添加相册"
+            android:layout_marginRight="10dp"
+            />
+        <ImageView
+            android:id="@+id/add_photo"
+            android:src="@mipmap/icon_add"
+            style="@style/TitleBarRightIcon"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+
+            />
+    </FrameLayout>
+
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -18,7 +43,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="相册名："
+            android:text="请输入新建相册名："
             android:textSize="18sp"
             android:layout_gravity="left"/>
         <EditText
@@ -44,15 +69,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="false"
-                android:text="已婚"
-                ></CheckBox>
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:text="是否设置为隐私相册"
+                android:textColor="#666"
+                android:layout_marginLeft="20dp"
+                ></CheckBox>
+            <!--<TextView-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="是否设置为隐私相册"-->
 
-                android:textSize="18sp"
-                android:layout_gravity="left"/>
+                <!--android:textSize="18sp"-->
+                <!--android:layout_gravity="left"/>-->
 
         </LinearLayout>
         <EditText

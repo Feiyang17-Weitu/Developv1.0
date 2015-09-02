@@ -39,8 +39,8 @@ public class PhotoViewActivity extends Activity {
         this.title = (TextView)super.findViewById(R.id.bar_title);
 
         Intent it = super.getIntent();
-       // String album_name = it.getStringExtra("album_name");
-       // this.title.setText(album_name);
+        String album_name = it.getStringExtra("album_name");
+        this.title.setText(album_name);
 
         this.myGridView = (GridView)super.findViewById(R.id.myGridView);
         this.myGridView.setAdapter(new ImageAdapter(this, this.picRes));
