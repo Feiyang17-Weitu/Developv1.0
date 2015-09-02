@@ -78,7 +78,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
         this.simpleAdapter = new SimpleAdapter(this, this.list, R.layout.photo_list,
                 new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
 
-        ImageButton btndrawer=(ImageButton)findViewById(R.id.btnDrawer);
+        ImageView btndrawer=(ImageView)findViewById(R.id.btnDrawer);
 
         btndrawer.setOnClickListener(new View.OnClickListener() {
             @Override
