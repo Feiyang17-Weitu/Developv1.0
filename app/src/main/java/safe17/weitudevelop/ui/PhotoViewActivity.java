@@ -20,11 +20,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import safe17.weitudevelop.R;
-import safe17.weitudevelop.adapter.ImageAdapter;
 
 public class PhotoViewActivity extends Activity {
 
-    //private static final int REQUEST_PICK = 0;
+    private static final int REQUEST_PICK = 0;
     private GridView gridview;
     private GridAdapter adapter;
     private ArrayList<String> selectedPicture = new ArrayList<String>();
@@ -46,12 +45,7 @@ public class PhotoViewActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
         adapter = new GridAdapter();
         gridview.setAdapter(adapter);
-//        Intent it = super.getIntent();
-//        String album_name = it.getStringExtra("album_name");
-//        this.title.setText(album_name);
-
     }
-
 
     @SuppressWarnings("unchecked")
     @Override
@@ -99,8 +93,7 @@ public class PhotoViewActivity extends Activity {
     private class SelectPictureClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            Intent SelectPictureIntent = new Intent(PhotoViewActivity.this, SelectPictureActivity.class);
-            startActivity(SelectPictureIntent);
+            startActivityForResult(new Intent(PhotoViewActivity.this, SelectPictureActivity.class), REQUEST_PICK);
         }
     }
 }
