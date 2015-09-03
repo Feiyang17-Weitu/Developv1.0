@@ -46,6 +46,9 @@ public class PhotoViewActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
         adapter = new GridAdapter();
         gridview.setAdapter(adapter);
+        Intent it = super.getIntent();
+        String album_name = it.getStringExtra("album_name");
+        this.title.setText(album_name);
 
     }
 
