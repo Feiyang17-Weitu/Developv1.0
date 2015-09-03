@@ -60,7 +60,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
        mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
        mMenu_layout_left = (RelativeLayout) findViewById(R.id.menu_layout_left);
        ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
-        menu_listview_l.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, TITLES));
+        menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, TITLES));
 
         //监听菜单
         menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
