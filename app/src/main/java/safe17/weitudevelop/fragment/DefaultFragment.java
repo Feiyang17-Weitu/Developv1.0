@@ -47,6 +47,7 @@ public class DefaultFragment extends Fragment {
         simpleAdapter = new SimpleAdapter(getActivity(), list, R.layout.photo_list,
                 new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
         photoList.setAdapter(simpleAdapter);
+
         return view;
     }
 
