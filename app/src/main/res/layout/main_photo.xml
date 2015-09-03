@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     tools:context=".MainActivity">
-<include
-    layout="@layout/titlebar"/>
+    <include
+        layout="@layout/titlebar"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -14,12 +14,12 @@
         android:orientation="vertical"
         android:layout_marginTop="59dp">
 
-    <!--GridView
-        android:id="@+id/myGridView"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:numColumns="3"
-        android:stretchMode="columnWidth"/-->
+        <!--GridView
+            android:id="@+id/myGridView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:numColumns="3"
+            android:stretchMode="columnWidth"/-->
         <GridView
             android:id="@+id/gridview"
             android:layout_width="match_parent"
@@ -27,5 +27,5 @@
             android:numColumns="4" >
         </GridView>
 
-</LinearLayout>
+    </LinearLayout>
 </RelativeLayout>
