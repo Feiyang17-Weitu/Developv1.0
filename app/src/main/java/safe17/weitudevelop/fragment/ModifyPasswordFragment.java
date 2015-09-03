@@ -1,14 +1,19 @@
 package safe17.weitudevelop.fragment;
 
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.support.v4.app.Fragment;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import safe17.weitudevelop.PasswdInfo;
 import safe17.weitudevelop.R;
 
 /**
@@ -17,15 +22,59 @@ import safe17.weitudevelop.R;
  */
 public class ModifyPasswordFragment extends Fragment
 {
+    EditText SavedPasswd;
+    EditText NewPasswd;
+    Button BtnModifyPasswd;
+    String SavedPasswdStr;
+    String NewPasswdStr;
+    int TryPasswd=5;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        ImageView button =  (ImageView) getActivity().findViewById(R.id.btnDrawer);
-//        button.setImageResource(R.mipmap.navigation_back);
+        View view= inflater.inflate(R.layout.fragment_modify_password,container,false);
+        //绑定对话框和确定按钮
+        SavedPasswd=(EditText)view.findViewById(R.id.SavedPasswd);
+        NewPasswd=(EditText)view.findViewById(R.id.NewPasswd);
+        BtnModifyPasswd=(Button)view.findViewById(R.id.BtnModifyPasswd);
+        //----绑定完毕
 
+        BtnModifyPasswd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SavedPasswdStr=SavedPasswd.getText().toString();
+                NewPasswdStr=NewPasswd.getText().toString();
+                //5次尝试机会
+                if(TryPasswd > 0) {
+                    //与原密码不符的情况
+                    if (PasswdInfo.preferences.getString("name", "").equals(SavedPasswdStr) == false) {
+                        TryPasswd--;
+                        Toast.makeText(getActivity(), "你输入的密码和原密码不符合，请重新输入!您还有" + TryPasswd + "次机会.", Toast.LENGTH_LONG).show();
+                    }
+                    //没有输入密码的情况
+                    else if(SavedPasswdStr.equals("")==true)
+                    {
+                        Toast.makeText(getActivity(), "您输入的密码为空，请重新输入..", Toast.LENGTH_LONG).show();
+                    }
+                    else
+                    {
+                        SharedPreferences.Editor editor = PasswdInfo.preferences.edit();
+                        editor.putString("name", NewPasswdStr);
+                        editor.commit();
+                        Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
+                    }
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
 
-        return inflater.inflate(R.layout.fragment_modify_password, null);
+                }
+
+            }
+        });
+
+        return view;
     }
+
 
 }
