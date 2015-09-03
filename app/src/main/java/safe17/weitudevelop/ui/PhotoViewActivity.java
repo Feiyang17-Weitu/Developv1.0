@@ -1,75 +1,106 @@
 package safe17.weitudevelop.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.view.Window;
+import java.util.ArrayList;
+
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView.ScaleType;
+
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.ImageAdapter;
 
 public class PhotoViewActivity extends Activity {
 
-    private TextView title = null;
+    //private static final int REQUEST_PICK = 0;
+    private GridView gridview;
+    private GridAdapter adapter;
+    private ArrayList<String> selectedPicture = new ArrayList<String>();
+    private ImageView AddPicture;
 
-    private GridView myGridView = null;
-
-    private int[] picRes = new int[]{R.mipmap.pic_1,R.mipmap.pic_1,
-            R.mipmap.pic_2,R.mipmap.pic_3,R.mipmap.pic_4,R.mipmap.pic_5,
-            R.mipmap.pic_6,R.mipmap.pic_7,R.mipmap.pic_8,R.mipmap.pic_9,
-            R.mipmap.pic_10,R.mipmap.pic_11,R.mipmap.pic_12,R.mipmap.pic_13};
-
-    public void onCreate(Bundle savedInstanceState){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
-        super.setContentView(R.layout.main_photo);
-//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.titlebar);
+        setContentView(R.layout.main_photo);
 
-        this.title = (TextView)super.findViewById(R.id.bar_title);
+        AddPicture = (ImageView)super.findViewById(R.id.add_album);
+        AddPicture.setOnClickListener(new SelectPictureClickListener());
 
-        Intent it = super.getIntent();
-        String album_name = it.getStringExtra("album_name");
-        this.title.setText(album_name);
-
-        this.myGridView = (GridView)super.findViewById(R.id.myGridView);
-        this.myGridView.setAdapter(new ImageAdapter(this, this.picRes));
-        this.myGridView.setOnItemClickListener(new OnItemClickListenertmp());
+        ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
+                .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
+                .diskCacheFileNameGenerator(new Md5FileNameGenerator()).diskCacheSize(100 * 1024 * 1024)
+                .diskCacheFileCount(300).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+        ImageLoader.getInstance().init(config);
+        gridview = (GridView) findViewById(R.id.gridview);
+        adapter = new GridAdapter();
+        gridview.setAdapter(adapter);
+//        Intent it = super.getIntent();
+//        String album_name = it.getStringExtra("album_name");
+//        this.title.setText(album_name);
 
     }
 
-    private class OnItemClickListenertmp implements OnItemClickListener{
+
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            selectedPicture = (ArrayList<String>) data
+                    .getSerializableExtra(SelectPictureActivity.INTENT_SELECTED_PICTURE);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    class GridAdapter extends BaseAdapter {
+        LayoutParams params = new AbsListView.LayoutParams(100, 100);
 
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            // TODO Auto-generated method stub
-            ImageView showimg = new ImageView(PhotoViewActivity.this);
-            showimg.setScaleType(ImageView.ScaleType.CENTER);
-            showimg.setLayoutParams(new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT));
-            showimg.setImageResource(PhotoViewActivity.this.picRes[position]);
-            Dialog dialog = new AlertDialog.Builder(PhotoViewActivity.this)
-                    .setIcon(R.mipmap.ic_launcher).setTitle("查看图片").setView(showimg)
-                    .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // TODO Auto-generated method stub
-
-                        }
-                    }).create();
-            dialog.show();
+        public int getCount() {
+            return selectedPicture.size();
         }
 
+        @Override
+        public Object getItem(int position) {
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = new ImageView(PhotoViewActivity.this);
+                ((ImageView) convertView).setScaleType(ScaleType.CENTER_CROP);
+                convertView.setLayoutParams(params);
+            }
+            ImageLoader.getInstance().displayImage("file://" + selectedPicture.get(position),
+                    (ImageView) convertView);
+            return convertView;
+        }
+
+    }
+
+    private class SelectPictureClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Intent SelectPictureIntent = new Intent(PhotoViewActivity.this, SelectPictureActivity.class);
+            startActivity(SelectPictureIntent);
+        }
     }
 }
