@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +35,15 @@ public class DefaultFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //修改title_bar的背景图片
+        ImageView button =  (ImageView) getActivity().findViewById(R.id.btnDrawer);
+        button.setBackgroundResource(R.mipmap.list);
+        ImageView right_button =  (ImageView) getActivity().findViewById(R.id.add_album);
+        right_button.setVisibility(View.VISIBLE);
+        TextView tittle_text = (TextView) getActivity().findViewById(R.id.bar_title);
+        tittle_text.setText("维图相册");
+
         View view = inflater.inflate(R.layout.fragment_default, null);
         photoList = (ListView) view.findViewById(R.id.photo_list);
 

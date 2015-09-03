@@ -38,7 +38,7 @@ import safe17.weitudevelop.fragment.ModifyPasswordFragment;
 
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
-    public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
+    public static final String[] TITLES = {"唯图相册","修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
    private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
 
@@ -141,18 +141,21 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
             switch (position)
             {
                 case 0:
-                    fragment = new ModifyPasswordFragment();
+                    fragment = new DefaultFragment();
                     break;
                 case 1:
-                    fragment = new ModifyFakePasswordFragment();
+                    fragment = new ModifyPasswordFragment();
                     break;
                 case 2:
-                    fragment = new FeedBackFragment();
+                    fragment = new ModifyFakePasswordFragment();
                     break;
                 case 3:
-                    fragment = new AboutUsFragment();
+                    fragment = new FeedBackFragment();
                     break;
                 case 4:
+                    fragment = new AboutUsFragment();
+                    break;
+                case 5:
                 {
                     android.os.Process.killProcess(android.os.Process.myPid());
                   //  System.exit(0);

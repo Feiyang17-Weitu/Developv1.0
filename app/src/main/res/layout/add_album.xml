@@ -11,7 +11,7 @@
 
         <ImageButton
             android:id="@+id/navigation_back"
-            style="@style/TitleBarLeftIcon"
+            style="@style/TitleBarLeftIcon_back"
             android:background="@mipmap/navigation_back"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
