@@ -22,13 +22,20 @@
     <style name="TitleBarRightIcon" parent="TitleBarIcon">
         <item name="android:layout_marginLeft">300dp</item>
     </style>
-    <style name="TitleBarLeftIcon" parent="TitleBarIcon">
+    <style name="TitleBarLeftIcon_back" parent="TitleBarIcon">
         <item name="android:layout_marginRight">300dp</item>
+        <item name="android:background">@mipmap/navigation_back</item>
+    </style>
+    <style name="TitleBarLeftIcon_list" parent="TitleBarIcon">
+        <item name="android:layout_marginRight">300dp</item>
+        <item name="android:background">@mipmap/list</item>
     </style>
     <style name="TitleBarIcon">
         <item name="android:layout_width">40dp</item>
         <item name="android:layout_height">28dp</item>
         <item name="android:layout_gravity">center_vertical</item>
     </style>
+
+
 
 </resources>

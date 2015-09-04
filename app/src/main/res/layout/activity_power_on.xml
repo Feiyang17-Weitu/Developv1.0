@@ -27,14 +27,17 @@
 
         <RelativeLayout
             android:id="@+id/menu_layout_left"
-            android:layout_width="300dp"
+            android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="left"
-            android:background="#616161">
+            android:textSize="14sp"
+            android:background="#232a30">
 
             <ListView
                 android:id="@+id/menu_listView_l"
                 android:layout_width="match_parent"
+                android:dividerHeight="1px"
+                android:divider="#e4e4e4"
                 android:layout_height="match_parent"></ListView>
         </RelativeLayout>
     </android.support.v4.widget.DrawerLayout>

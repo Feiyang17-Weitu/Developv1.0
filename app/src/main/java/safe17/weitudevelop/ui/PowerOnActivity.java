@@ -38,7 +38,7 @@ import safe17.weitudevelop.fragment.ModifyPasswordFragment;
 
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
-    public static final String[] TITLES = {"修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
+    public static final String[] TITLES = {"唯图相册","修改密码","修改伪密码" ,"帮助与反馈", "关于","退出" };
    private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
 
@@ -60,7 +60,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
        mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
        mMenu_layout_left = (RelativeLayout) findViewById(R.id.menu_layout_left);
        ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
-        menu_listview_l.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, TITLES));
+        menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, TITLES));
 
         //监听菜单
         menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
@@ -141,18 +141,21 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
             switch (position)
             {
                 case 0:
-                    fragment = new ModifyPasswordFragment();
+                    fragment = new DefaultFragment();
                     break;
                 case 1:
-                    fragment = new ModifyFakePasswordFragment();
+                    fragment = new ModifyPasswordFragment();
                     break;
                 case 2:
-                    fragment = new FeedBackFragment();
+                    fragment = new ModifyFakePasswordFragment();
                     break;
                 case 3:
-                    fragment = new AboutUsFragment();
+                    fragment = new FeedBackFragment();
                     break;
                 case 4:
+                    fragment = new AboutUsFragment();
+                    break;
+                case 5:
                 {
                     android.os.Process.killProcess(android.os.Process.myPid());
                   //  System.exit(0);
