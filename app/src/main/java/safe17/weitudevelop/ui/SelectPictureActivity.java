@@ -43,6 +43,7 @@ import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
+
 public class SelectPictureActivity extends Activity {
 
     /**
@@ -76,6 +77,7 @@ public class SelectPictureActivity extends Activity {
      */
     private ArrayList<String> selectedPicture = new ArrayList<String>();
     private String cameraPath = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

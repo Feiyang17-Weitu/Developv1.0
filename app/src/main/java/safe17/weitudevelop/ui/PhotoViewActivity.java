@@ -8,6 +8,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.GridView;
 import java.util.ArrayList;
+import android.widget.TextView;
 
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -18,8 +19,11 @@ import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-
 import safe17.weitudevelop.R;
+
+import safe17.weitudevelop.tool.SharePrefrencesTools;
+
+
 
 public class PhotoViewActivity extends Activity {
 
@@ -28,7 +32,8 @@ public class PhotoViewActivity extends Activity {
     private GridAdapter adapter;
     private ArrayList<String> selectedPicture = new ArrayList<String>();
     private ImageView AddPicture;
-
+    private TextView title;
+    private SharePrefrencesTools mTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,12 +42,22 @@ public class PhotoViewActivity extends Activity {
         AddPicture = (ImageView)super.findViewById(R.id.add_album);
         AddPicture.setOnClickListener(new SelectPictureClickListener());
 
+        Intent it = super.getIntent();
+        String album_name = it.getStringExtra("album_name");
+        title = (TextView)super.findViewById(R.id.bar_title);
+        title.setText(album_name);
+
+        mTools = new SharePrefrencesTools(this, album_name);
+        this.readImagFiles();
+
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator()).diskCacheSize(100 * 1024 * 1024)
                 .diskCacheFileCount(300).tasksProcessingOrder(QueueProcessingType.LIFO).build();
         ImageLoader.getInstance().init(config);
+
         gridview = (GridView) findViewById(R.id.gridview);
+
         adapter = new GridAdapter();
         gridview.setAdapter(adapter);
     }
@@ -52,14 +67,38 @@ public class PhotoViewActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-            selectedPicture = (ArrayList<String>) data
+
+            ArrayList<String> resultData =  (ArrayList<String>) data
                     .getSerializableExtra(SelectPictureActivity.INTENT_SELECTED_PICTURE);
+            selectedPicture.addAll(resultData);
+            //去除重复图片
+            for (int i = 0; i < selectedPicture.size() - 1; i++)
+            {
+                for (int j = i + 1; j < selectedPicture.size(); j++)
+                {
+                    if (selectedPicture.get(i).equals(selectedPicture.get(j)))
+                    {
+                        selectedPicture.remove(j);
+                        j--;
+                    }
+                }
+            }
+            // 存储
+            this.saveImgFiles();
             adapter.notifyDataSetChanged();
         }
     }
 
+    private void readImagFiles() {
+        selectedPicture = mTools.getPicPaths();
+    }
+
+    private void saveImgFiles() {
+        mTools.savePicPaths(selectedPicture);
+    }
+
     class GridAdapter extends BaseAdapter {
-        LayoutParams params = new AbsListView.LayoutParams(100, 100);
+        LayoutParams params = new AbsListView.LayoutParams(200, 200);
 
         @Override
         public int getCount() {
