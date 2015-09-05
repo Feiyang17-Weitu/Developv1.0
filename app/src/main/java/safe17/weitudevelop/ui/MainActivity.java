@@ -16,13 +16,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import safe17.weitudevelop.R;
-import safe17.weitudevelop.PasswdInfo;
+import safe17.weitudevelop.tool.SharePrefrencesTools;
 
 public class MainActivity extends Activity {
     private TextView myTextView;
     EditText password1;
     EditText password2;
     Button   btnlogin;
+    SharePrefrencesTools mTools;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +31,9 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         password1 = (EditText) findViewById(R.id.password1);
         password2 = (EditText) findViewById(R.id.password2);
-        PasswdInfo.preferences = getSharedPreferences("true_password_info", Context.MODE_PRIVATE);
+        mTools = new SharePrefrencesTools(MainActivity.this, "true_password_info");
         myTextView = (TextView) findViewById(R.id.title);
-        if (PasswdInfo.preferences != null && !PasswdInfo.preferences.getString("password", "").equals("")) {
+        if (mTools != null && !mTools.getTurePassword().equals("")) {
            password2.setVisibility(View.INVISIBLE);
             String welcome_mes = "输入您的密码";
             myTextView.setText(welcome_mes);
@@ -46,9 +47,9 @@ public class MainActivity extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-            PasswdInfo.preferences = getSharedPreferences("true_password_info", Context.MODE_PRIVATE);
-            if (!PasswdInfo.preferences.getString("password", "").equals("")) {
-                if (password1.getText().toString().equals(PasswdInfo.preferences.getString("password", ""))) {
+
+            if (!mTools.getTurePassword().equals("")) {
+                if (password1.getText().toString().equals(mTools.getTurePassword())) {
                     //密码正确，页面跳转
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
@@ -62,9 +63,7 @@ public class MainActivity extends Activity {
                     return;
                 }
                 else if (password1.getText().toString().equals(password2.getText().toString())) {
-                    SharedPreferences.Editor editor = PasswdInfo.preferences.edit();
-                    editor.putString("password", password1.getText().toString());
-                    editor.commit();
+                    mTools.saveTurePassword(password1.getText().toString());
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
                 }

@@ -45,13 +45,25 @@ public class SharePrefrencesTools {
         return result;
     }
 
-    public String GetTurePassword() {
-        String strTruePwd = mPreferences.getString("password", "");
+    public String getTurePassword() {
+        String strTruePwd = mPreferences.getString("true_password", "");
         return strTruePwd;
     }
 
-    public String GetFakePassword() {
-        String strFakePwd = mPreferences.getString("password", "");
+    public void saveTurePassword(String strTruePwd) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString("true_password", strTruePwd);
+        editor.commit();
+    }
+
+    public String getFakePassword() {
+        String strFakePwd = mPreferences.getString("fake_password", "");
         return strFakePwd;
+    }
+
+    public void saveFakePassword(String strFakePwd) {
+        SharedPreferences.Editor editor = mPreferences.edit();
+        editor.putString("fake_password", strFakePwd);
+        editor.commit();
     }
 }
