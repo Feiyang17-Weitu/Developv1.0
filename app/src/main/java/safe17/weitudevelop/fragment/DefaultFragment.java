@@ -19,11 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 import safe17.weitudevelop.R;
-import safe17.weitudevelop.ui.PhotoViewActivity;
+import safe17.weitudevelop.ui.PhotoGridViewActivity;
 
-/**
- * Created by ouxuewen on 2015/9/1.
- */
 public class DefaultFragment extends Fragment {
 
     private ListView photoList;
@@ -72,7 +69,7 @@ public class DefaultFragment extends Fragment {
             Map<String, String> map = (Map<String, String>) simpleAdapter.getItem(position);
             String album_name = map.get("album_name");
 
-            Intent main_photo = new Intent(getActivity(), PhotoViewActivity.class);
+            Intent main_photo = new Intent(getActivity(), PhotoGridViewActivity.class);
             main_photo.putExtra("album_name", album_name);
             getActivity().startActivity(main_photo);
         }
