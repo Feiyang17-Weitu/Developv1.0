@@ -24,11 +24,11 @@
     </style>
     <style name="TitleBarLeftIcon_back" parent="TitleBarIcon">
         <item name="android:layout_marginRight">300dp</item>
-        <item name="android:background">@mipmap/navigation_back</item>
+        <item name="android:src">@mipmap/navigation_back</item>
     </style>
     <style name="TitleBarLeftIcon_list" parent="TitleBarIcon">
         <item name="android:layout_marginRight">300dp</item>
-        <item name="android:background">@mipmap/list</item>
+        <item name="android:src">@mipmap/list</item>
     </style>
     <style name="TitleBarIcon">
         <item name="android:layout_width">40dp</item>

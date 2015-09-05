@@ -41,20 +41,17 @@ public class PhotoGridViewActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_photo);
 
-        //修改title_bar的背景图片
+        //修改title_bar
         ImageView left_button =  (ImageView) findViewById(R.id.btnDrawer);
-        left_button.setBackgroundResource(R.mipmap.navigation_back);
+        left_button.setImageResource(R.mipmap.navigation_back);
         left_button.setOnClickListener(new SelectBackClickListener());
-        ImageView right_button =  (ImageView) findViewById(R.id.add_album);
-        right_button.setBackgroundResource(R.mipmap.camera);
-
-
-        AddPicture = (ImageView)super.findViewById(R.id.add_album);
+        AddPicture =  (ImageView) findViewById(R.id.add_album);
+        AddPicture.setImageResource(R.mipmap.camera);
         AddPicture.setOnClickListener(new SelectPictureClickListener());
 
         Intent it = super.getIntent();
         String album_name = it.getStringExtra("album_name");
-        title = (TextView)super.findViewById(R.id.bar_title);
+        title = (TextView) findViewById(R.id.bar_title);
         title.setText(album_name);
 
         mTools = new SharePrefrencesTools(this, album_name);

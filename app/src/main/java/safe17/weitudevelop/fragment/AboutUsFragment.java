@@ -19,7 +19,7 @@ public class AboutUsFragment extends Fragment {
                              Bundle savedInstanceState) {
         //修改title_bar的背景图片
         ImageView button =  (ImageView) getActivity().findViewById(R.id.btnDrawer);
-        button.setBackgroundResource(R.mipmap.navigation_back);
+        button.setImageResource(R.mipmap.navigation_back);
         ImageView right_button =  (ImageView) getActivity().findViewById(R.id.add_album);
         right_button.setVisibility(View.INVISIBLE);
         TextView tittle_text = (TextView) getActivity().findViewById(R.id.bar_title);
