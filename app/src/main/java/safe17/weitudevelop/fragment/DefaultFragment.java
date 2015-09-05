@@ -21,9 +21,6 @@ import java.util.Map;
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.ui.PhotoViewActivity;
 
-/**
- * Created by ouxuewen on 2015/9/1.
- */
 public class DefaultFragment extends Fragment {
 
     private ListView photoList;
