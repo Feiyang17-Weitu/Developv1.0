@@ -57,7 +57,7 @@ public class ModifyPasswordFragment extends Fragment
                 //5次尝试机会
                 if(TryPasswd > 0) {
                     //与原密码不符的情况
-                    if (PasswdInfo.preferences.getString("name", "").equals(SavedPasswdStr) == false) {
+                    if (PasswdInfo.preferences.getString("password", "").equals(SavedPasswdStr) == false) {
                         TryPasswd--;
                         Toast.makeText(getActivity(), "你输入的密码和原密码不符合，请重新输入!您还有" + TryPasswd + "次机会.", Toast.LENGTH_LONG).show();
                     }
@@ -69,7 +69,7 @@ public class ModifyPasswordFragment extends Fragment
                     else
                     {
                         SharedPreferences.Editor editor = PasswdInfo.preferences.edit();
-                        editor.putString("name", NewPasswdStr);
+                        editor.putString("password", NewPasswdStr);
                         editor.commit();
                         Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
                     }
