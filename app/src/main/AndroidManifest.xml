@@ -24,7 +24,7 @@
             android:label="@string/title_activity_power_on" >
         </activity>
         <activity
-        android:name=".ui.PhotoViewActivity"
+        android:name=".ui.PhotoGridViewActivity"
         android:label="@string/title_activity_power_on" >
         </activity>
         <activity

@@ -25,7 +25,7 @@ import safe17.weitudevelop.tool.SharePrefrencesTools;
 
 
 
-public class PhotoViewActivity extends Activity {
+public class PhotoGridViewActivity extends Activity {
 
     private static final int REQUEST_PICK = 0;
     private GridView gridview;
@@ -36,8 +36,18 @@ public class PhotoViewActivity extends Activity {
     private SharePrefrencesTools mTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_photo);
+
+        //修改title_bar的背景图片
+        ImageView left_button =  (ImageView) findViewById(R.id.btnDrawer);
+        left_button.setBackgroundResource(R.mipmap.navigation_back);
+        left_button.setOnClickListener(new SelectBackClickListener());
+        ImageView right_button =  (ImageView) findViewById(R.id.add_album);
+        right_button.setBackgroundResource(R.mipmap.camera);
+
 
         AddPicture = (ImageView)super.findViewById(R.id.add_album);
         AddPicture.setOnClickListener(new SelectPictureClickListener());
@@ -118,7 +128,7 @@ public class PhotoViewActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = new ImageView(PhotoViewActivity.this);
+                convertView = new ImageView(PhotoGridViewActivity.this);
                 ((ImageView) convertView).setScaleType(ScaleType.CENTER_CROP);
                 convertView.setLayoutParams(params);
             }
@@ -132,7 +142,14 @@ public class PhotoViewActivity extends Activity {
     private class SelectPictureClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            startActivityForResult(new Intent(PhotoViewActivity.this, SelectPictureActivity.class), REQUEST_PICK);
+            startActivityForResult(new Intent(PhotoGridViewActivity.this, SelectPictureActivity.class), REQUEST_PICK);
+        }
+    }
+    private class SelectBackClickListener implements View.OnClickListener{
+        @Override
+        public void onClick(View view) {
+            Intent BackIntent = new Intent(PhotoGridViewActivity.this, PowerOnActivity.class);
+            startActivity(BackIntent);
         }
     }
 }

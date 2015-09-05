@@ -141,7 +141,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
         //        public void onClick(View v) {
 //            // TODO Auto-generated method stub
 //            switch (v.getId()) {
-//                case R.id.add_album://添加相册
+//                case R.id.activity_add_album://添加相册
 //
 //                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
 //                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();

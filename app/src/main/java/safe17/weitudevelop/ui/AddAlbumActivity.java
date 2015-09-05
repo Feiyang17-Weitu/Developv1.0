@@ -25,7 +25,7 @@ public class AddAlbumActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_album);
+        setContentView(R.layout.activity_add_album);
         //返回按钮
         ImageButton NaviBack=(ImageButton)findViewById(R.id.navigation_back);
         NaviBack.setOnClickListener(new View.OnClickListener() {
