@@ -79,11 +79,18 @@ public class SelectPictureActivity extends Activity {
     private String cameraPath = null;
 
 
+    private String album_name="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_select_picture);
+
+        Intent it = super.getIntent();
+        album_name = it.getStringExtra("album_name");
+
+
         MAX_NUM = getIntent().getIntExtra(INTENT_MAX_NUM, 6);
         context = this;
         mContentResolver = getContentResolver();
@@ -141,6 +148,7 @@ public class SelectPictureActivity extends Activity {
     public void ok(View v) {
         Intent data = new Intent();
         data.putExtra(INTENT_SELECTED_PICTURE, selectedPicture);
+        data.putExtra("album_name",SelectPictureActivity.this.album_name);
         setResult(RESULT_OK, data);
         this.finish();
     }
