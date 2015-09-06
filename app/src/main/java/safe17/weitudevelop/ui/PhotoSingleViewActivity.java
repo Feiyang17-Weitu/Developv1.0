@@ -45,6 +45,7 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         }
 
         mViewPager.setAdapter(new MyAdapter());
+        mViewPager.setCurrentItem(first_position);
         mViewPager.setOnPageChangeListener(this);
     }
 
