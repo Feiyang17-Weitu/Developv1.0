@@ -37,7 +37,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion)
     {
-        //null
+
     }
 
     public void AddFolder(SQLiteDatabase db,String name,boolean isprivate)
