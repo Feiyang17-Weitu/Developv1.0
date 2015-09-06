@@ -34,6 +34,7 @@
         android:orientation="vertical">
 
         <TextView
+
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="请输入新建相册名："
@@ -48,6 +49,7 @@
             android:layout_marginTop="15dp"
             android:textSize="18sp" />
         <TextView
+            android:id="@+id/inputHint"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="设置隐私相册："

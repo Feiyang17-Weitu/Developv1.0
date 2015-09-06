@@ -46,7 +46,7 @@ public class ModifyFakePasswordFragment extends Fragment {
         newFakePasswd = (EditText)view.findViewById(R.id.new_fake_password);
         BtnModifyPasswd = (Button)view.findViewById(R.id.BtnOk);
 
-        mTools = new SharePrefrencesTools(getActivity(), "fake_password_info");
+        mTools = new SharePrefrencesTools(getActivity(), "password_info");
 
         BtnModifyPasswd.setOnClickListener(new View.OnClickListener() {
             @Override

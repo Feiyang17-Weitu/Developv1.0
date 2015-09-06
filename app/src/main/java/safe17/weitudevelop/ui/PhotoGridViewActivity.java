@@ -92,9 +92,11 @@ public class PhotoGridViewActivity extends Activity {
             }
             // 存储
             this.saveImgFiles();
+
             adapter.notifyDataSetChanged();
         }
     }
+
 
     private void readImagFiles() {
         selectedPicture = mTools.getPicPaths();

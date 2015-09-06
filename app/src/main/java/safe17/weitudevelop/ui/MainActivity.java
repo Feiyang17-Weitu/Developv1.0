@@ -5,11 +5,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-//import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,29 +15,33 @@ import android.widget.Toast;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.tool.SharePrefrencesTools;
+import safe17.weitudevelop.tool.PublicData;
 
 public class MainActivity extends Activity {
     private TextView myTextView;
     EditText password1;
     EditText password2;
     Button   btnlogin;
-    SharePrefrencesTools mTools;
+    public SharePrefrencesTools mTools;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        password1 = (EditText) findViewById(R.id.password1);
-        password2 = (EditText) findViewById(R.id.password2);
-        mTools = new SharePrefrencesTools(MainActivity.this, "true_password_info");
-        myTextView = (TextView) findViewById(R.id.title);
-        if (mTools != null && !mTools.getTurePassword().equals("")) {
-           password2.setVisibility(View.INVISIBLE);
-            String welcome_mes = "输入您的密码";
-            myTextView.setText(welcome_mes);
-        }
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
+            password1 = (EditText) findViewById(R.id.password1);
+            password2 = (EditText) findViewById(R.id.password2);
+            myTextView = (TextView) findViewById(R.id.title);
 
-        btnlogin = (Button) findViewById(R.id.BtnLogin);
+            mTools = new SharePrefrencesTools(MainActivity.this, "password_info");
+
+            if (mTools != null && !mTools.getTurePassword().equals("")) {
+                password2.setVisibility(View.INVISIBLE);
+                String welcome_mes = "输入您的密码";
+                myTextView.setText(welcome_mes);
+                PublicData.FirstLogin=false;
+            }
+
+            btnlogin = (Button) findViewById(R.id.BtnLogin);
         btnlogin.setOnClickListener(new LoginClickListener());
     }
 
@@ -47,15 +49,31 @@ public class MainActivity extends Activity {
     class LoginClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
-
-            if (!mTools.getTurePassword().equals("")) {
-                if (password1.getText().toString().equals(mTools.getTurePassword())) {
+            if (!mTools.getTurePassword().equals(""))  //密码不为空
+            {
+                //真密码
+                if(password1.getText().toString().equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "密码不能为空，请重新输入！", Toast.LENGTH_LONG).show();
+                }
+                else if (password1.getText().toString().equals(mTools.getTurePassword())) {
                     //密码正确，页面跳转
+                    PublicData.LoginInTruePasswd = true;
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
+                    password1.setText("");
+                }
+                else if (password1.getText().toString().equals(mTools.getFakePassword()))
+                {
+                    PublicData.LoginInTruePasswd = false;
+                    Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
+                    startActivity(LoginIntent);
+                    password1.setText("");
                 }
                 else
+                {
                     Toast.makeText(getApplicationContext(), "密码输入错误，请重新输入！", Toast.LENGTH_LONG).show();
+                }
             }
             else {
                 if (password1.getText().toString().equals("") || password2.getText().toString().equals("")) {
@@ -64,8 +82,10 @@ public class MainActivity extends Activity {
                 }
                 else if (password1.getText().toString().equals(password2.getText().toString())) {
                     mTools.saveTurePassword(password1.getText().toString());
+                    PublicData.LoginInTruePasswd = true;
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
+                    password1.setText("");
                 }
                 else
                     Toast.makeText(getApplicationContext(), "两次输入密码不一致，请重新输入！", Toast.LENGTH_LONG).show();
