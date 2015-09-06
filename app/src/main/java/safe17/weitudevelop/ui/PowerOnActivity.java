@@ -151,8 +151,8 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 5: {
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        //  System.exit(0);
+                        //android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(0);
                         break;
                     }
                     default:
@@ -178,7 +178,8 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 4:
-                        android.os.Process.killProcess(android.os.Process.myPid());
+                        //android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(0);
                         break;
                     default:
                         break;
