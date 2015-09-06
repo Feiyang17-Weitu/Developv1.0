@@ -32,6 +32,7 @@ public class DefaultFragment extends Fragment {
     private ListView photoList;
     private SimpleAdapter simpleAdapter;
 
+
    // public String data[][] = new String[][]{{"默认相册","1张照片"}};
    List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 

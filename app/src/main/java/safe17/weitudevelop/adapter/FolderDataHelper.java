@@ -30,7 +30,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
         String sql = "create table Folder(name varchar(50) primary key ,isprivate integer not null,picturenum integer not null)";
         db.execSQL(sql);
 
-        String sql2="insert into Folder(name,isprivate,picturenum) values('hehe','1',0)";
+        String sql2="insert into Folder(name,isprivate,picturenum) values('默认相册','0',0)";
         db.execSQL(sql2);
     }
 
@@ -43,7 +43,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
     public void AddFolder(SQLiteDatabase db,String name,boolean isprivate)
     {
         Integer val;
-        if(isprivate)
+        if(isprivate==true)
             val=1;
         else
             val=0;
@@ -91,7 +91,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
             Map<String,String> map=new HashMap<>();
             map.put("album_name", cursor.getString(0));
             String tmp=cursor.getInt(1) +"张照片";
-            Log.i(tmp,tmp);
+            //Log.i(tmp,tmp);
             map.put("photo_num",tmp);
         }
         return result;
