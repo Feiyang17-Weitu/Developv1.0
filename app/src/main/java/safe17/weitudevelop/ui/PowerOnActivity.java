@@ -108,7 +108,16 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
         Fragment fragment = new DefaultFragment();
         ft.replace(R.id.fragment_layout, fragment);
         ft.commit();
+    }
 
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = new DefaultFragment();
+        ft.replace(R.id.fragment_layout, fragment);
+        ft.commit();
     }
 
     @Override
@@ -142,8 +151,8 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 5: {
-                        android.os.Process.killProcess(android.os.Process.myPid());
-                        //  System.exit(0);
+                        //android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(0);
                         break;
                     }
                     default:
@@ -169,7 +178,8 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 4:
-                        android.os.Process.killProcess(android.os.Process.myPid());
+                        //android.os.Process.killProcess(android.os.Process.myPid());
+                        System.exit(0);
                         break;
                     default:
                         break;
