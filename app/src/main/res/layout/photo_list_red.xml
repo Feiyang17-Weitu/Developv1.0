@@ -10,9 +10,9 @@
         android:id="@+id/photoshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/eye"
+        android:src="@mipmap/picture"
         android:layout_marginRight="10dp"
-
+        android:layout_marginTop="5dp"
        />
 
     <LinearLayout
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="默认相册"
-            android:textColor="#777"
+            android:textColor="#ff0000"
             android:textSize="18sp"/>
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="4张照片"
-            android:textColor="#ddd"
+            android:textColor="#ddb0d7"
             android:textSize="14sp"/>
 
     </LinearLayout>

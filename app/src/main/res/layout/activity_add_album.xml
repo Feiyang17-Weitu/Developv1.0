@@ -38,6 +38,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="请输入新建相册名："
+            android:layout_marginLeft="10dp"
+            android:textColor="#777"
             android:textSize="18sp"
             android:layout_gravity="left"/>
         <EditText
@@ -53,6 +55,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="设置隐私相册："
+            android:layout_marginLeft="10dp"
+            android:textColor="#777"
             android:textSize="18sp"
             android:layout_gravity="left"/>
 
@@ -67,17 +71,11 @@
                 android:layout_height="wrap_content"
                 android:checked="false"
                 android:text="是否设置为隐私相册"
-                android:textColor="#666"
+                android:textColor="#aaa"
                 android:layout_marginLeft="20dp"
-                ></CheckBox>
-            <!--<TextView-->
-                <!--android:layout_width="fill_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="是否设置为隐私相册"-->
+                >
 
-                <!--android:textSize="18sp"-->
-                <!--android:layout_gravity="left"/>-->
-
+            </CheckBox>
         </LinearLayout>
         <EditText
             android:id="@+id/Album_Passwd"
@@ -85,7 +83,9 @@
             android:layout_height="40dp"
             android:textSize="18sp"
             android:layout_marginLeft="35dp"
-            android:layout_marginRight="35dp"/>
+            android:layout_marginRight="35dp"
+            android:hint="第一次使用请设密码"
+            />
         <Button
             android:id="@+id/FinishAlbum"
             android:layout_width="fill_parent"
