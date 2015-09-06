@@ -1,6 +1,7 @@
 package safe17.weitudevelop.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private android.support.v4.view.ViewPager mViewPager;
 
     private List<ImageView> imageIdList;
+    private int first_position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,10 +36,14 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         mViewPager = (ViewPager)findViewById(R.id.vf_photo);
         imageIdList = new ArrayList<ImageView>();
 
+        Intent it = super.getIntent();
+        first_position = it.getIntExtra("position", 1);
+        ArrayList<String> position_array = it.getStringArrayListExtra("position_array");
 
+        for (int i=0;i<position_array.size();i++){
+            imageIdList.add(getBitmap(position_array.get(i)));
+        }
 
-        imageIdList.add(getBitmap("/sdcard/aaa.jpg"));
-        imageIdList.add(getBitmap("/sdcard/bbb.jpg"));
         mViewPager.setAdapter(new MyAdapter());
         mViewPager.setOnPageChangeListener(this);
     }
@@ -45,7 +51,7 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private ImageView getBitmap(String fileName) {
 
         ImageView imageView  = new ImageView(this);
-        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 300));
+        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 500));
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

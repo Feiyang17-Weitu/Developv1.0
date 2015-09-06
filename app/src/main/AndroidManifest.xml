@@ -35,6 +35,10 @@
             android:name=".ui.AddAlbumActivity"
             android:label="@string/title_activity_power_on" >
         </activity>
+        <activity
+            android:name=".ui.PhotoSingleViewActivity"
+            android:label="@string/title_activity_power_on" >
+        </activity>
 
     </application>
 
