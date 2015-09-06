@@ -1,19 +1,26 @@
 package safe17.weitudevelop.ui;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.GridView;
 import java.util.ArrayList;
+
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView.ScaleType;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -64,6 +71,7 @@ public class PhotoGridViewActivity extends Activity {
         ImageLoader.getInstance().init(config);
 
         gridview = (GridView) findViewById(R.id.gridview);
+        gridview.setOnItemClickListener(new OnPhotoItemClickListener());
 
         adapter = new GridAdapter();
         gridview.setAdapter(adapter);
@@ -150,5 +158,20 @@ public class PhotoGridViewActivity extends Activity {
             Intent BackIntent = new Intent(PhotoGridViewActivity.this, PowerOnActivity.class);
             startActivity(BackIntent);
         }
+    }
+    private class OnPhotoItemClickListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // TODO Auto-generated method stub
+
+            Intent SinglePhotoIntent = new Intent(PhotoGridViewActivity.this, PhotoSingleViewActivity.class);
+//            Toast.makeText(PhotoGridViewActivity.this,selectedPicture.get(position),Toast.LENGTH_LONG).show();
+            SinglePhotoIntent.putExtra("position_array", selectedPicture);
+            SinglePhotoIntent.putExtra("position",position);
+            startActivity(SinglePhotoIntent);
+        }
+
     }
 }

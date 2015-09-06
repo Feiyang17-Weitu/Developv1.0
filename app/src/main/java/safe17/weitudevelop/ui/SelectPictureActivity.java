@@ -88,8 +88,8 @@ public class SelectPictureActivity extends Activity {
         context = this;
         mContentResolver = getContentResolver();
         loader = ImageLoader.getInstance();
-        options = new DisplayImageOptions.Builder().showImageOnLoading(R.mipmap.ic_launcher)
-                .showImageForEmptyUri(R.mipmap.ic_launcher).showImageOnFail(R.mipmap.ic_launcher)
+        options = new DisplayImageOptions.Builder().showImageOnLoading(R.mipmap.camera_icon)
+                .showImageForEmptyUri(R.mipmap.camera_icon).showImageOnFail(R.mipmap.camera_icon)
                 .cacheInMemory(true).cacheOnDisk(true).considerExifParams(true)
                 .imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).build();
         initView();
