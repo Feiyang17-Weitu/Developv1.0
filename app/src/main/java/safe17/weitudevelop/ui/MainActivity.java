@@ -35,7 +35,7 @@ public class MainActivity extends Activity {
             mTools = new SharePrefrencesTools(MainActivity.this, "password_info");
 
             if (mTools != null && !mTools.getTurePassword().equals("")) {
-                password2.setVisibility(View.INVISIBLE);
+                password2.setVisibility(View.GONE);
                 String welcome_mes = "输入您的密码";
                 myTextView.setText(welcome_mes);
                 PublicData.FirstLogin=false;
