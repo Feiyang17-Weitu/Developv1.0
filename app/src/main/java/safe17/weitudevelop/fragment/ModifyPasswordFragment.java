@@ -50,7 +50,7 @@ public class ModifyPasswordFragment extends Fragment
         BtnModifyPasswd=(Button)view.findViewById(R.id.BtnModifyPasswd);
         //----绑定完毕
 
-        mTools = new SharePrefrencesTools(getActivity(), "true_password_info");
+        mTools = new SharePrefrencesTools(getActivity(), "password_info");
 
         BtnModifyPasswd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,6 @@ public class ModifyPasswordFragment extends Fragment
                 else
                 {
                     Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
-
                 }
 
             }

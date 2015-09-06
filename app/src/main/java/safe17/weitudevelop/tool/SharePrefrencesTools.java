@@ -11,10 +11,11 @@ import java.util.List;
 /**
  * Created by wangxubing on 2015/9/4.
  */
+
 public class SharePrefrencesTools {
 
     private final String SPLITER = ";";
-    private SharedPreferences mPreferences;
+    public SharedPreferences mPreferences;
     private Context mContext;
 
     public SharePrefrencesTools(Context context, String name) {
