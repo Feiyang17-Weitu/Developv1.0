@@ -10,9 +10,9 @@
         android:id="@+id/photoshow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/picture"
+        android:src="@mipmap/eye"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="5dp"
+
        />
 
     <LinearLayout

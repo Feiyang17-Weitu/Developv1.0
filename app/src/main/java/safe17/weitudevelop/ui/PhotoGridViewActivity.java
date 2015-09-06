@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -159,12 +160,11 @@ public class PhotoGridViewActivity extends Activity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = new ImageView(PhotoGridViewActivity.this);
-                ((ImageView) convertView).setScaleType(ScaleType.CENTER_CROP);
-                convertView.setLayoutParams(params);
+                convertView = LayoutInflater.from(PhotoGridViewActivity.this).inflate(R.layout.grid_item, parent, false);
             }
+            ImageView imageView = (ImageView)convertView.findViewById(R.id.gridPhoto);
             ImageLoader.getInstance().displayImage("file://" + selectedPicture.get(position),
-                    (ImageView) convertView);
+                    imageView);
             return convertView;
         }
 
@@ -191,10 +191,7 @@ public class PhotoGridViewActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            // TODO Auto-generated method stub
-
             Intent SinglePhotoIntent = new Intent(PhotoGridViewActivity.this, PhotoSingleViewActivity.class);
-//            Toast.makeText(PhotoGridViewActivity.this,selectedPicture.get(position),Toast.LENGTH_LONG).show();
             SinglePhotoIntent.putExtra("position_array", selectedPicture);
             SinglePhotoIntent.putExtra("position",position);
             startActivity(SinglePhotoIntent);

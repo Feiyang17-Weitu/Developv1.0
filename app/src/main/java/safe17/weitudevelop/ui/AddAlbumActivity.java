@@ -53,7 +53,7 @@ public class AddAlbumActivity extends Activity {
         InputHint=(TextView)findViewById(R.id.inputHint);
         InputAlbum=(EditText)findViewById(R.id.flodername);
         InputPasswd=(EditText)findViewById(R.id.Album_Passwd);
-        InputPasswd.setVisibility(View.INVISIBLE);
+        InputPasswd.setVisibility(View.GONE);
         isPrivateChecked=(CheckBox)findViewById(R.id.choose_private);
         Button FinishAlbum=(Button)findViewById(R.id.FinishAlbum);
 
@@ -67,18 +67,18 @@ public class AddAlbumActivity extends Activity {
                         if (isPrivateChecked.isChecked())
                             InputPasswd.setVisibility(View.VISIBLE);
                         else
-                            InputPasswd.setVisibility(View.INVISIBLE);
+                            InputPasswd.setVisibility(View.GONE);
                     }
                     else
-                            InputPasswd.setVisibility(View.INVISIBLE);
+                            InputPasswd.setVisibility(View.GONE);
                 }
             });
         }
         else
         {
-            InputHint.setVisibility(View.INVISIBLE);
-            isPrivateChecked.setVisibility(View.INVISIBLE);
-            InputPasswd.setVisibility(View.INVISIBLE);
+            InputHint.setVisibility(View.GONE);
+            isPrivateChecked.setVisibility(View.GONE);
+            InputPasswd.setVisibility(View.GONE);
             FinishAlbum.setOnClickListener(new FinishAlbumListener());
         }
         //数据库类
