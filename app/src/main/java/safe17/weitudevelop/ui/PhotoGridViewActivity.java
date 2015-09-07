@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import safe17.weitudevelop.R;
 
+import safe17.weitudevelop.adapter.FolderDataHelper;
 import safe17.weitudevelop.tool.SharePrefrencesTools;
 
 
@@ -41,7 +43,8 @@ public class PhotoGridViewActivity extends Activity {
     private ArrayList<String> selectedPicture = new ArrayList<String>();
     private ImageView AddPicture;
     private TextView title;
-    private SharePrefrencesTools mTools;
+    private String album_name;
+    //private SharePrefrencesTools mTools;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -58,17 +61,36 @@ public class PhotoGridViewActivity extends Activity {
         AddPicture.setOnClickListener(new SelectPictureClickListener());
 
         Intent it = super.getIntent();
-        String album_name = it.getStringExtra("album_name");
+        album_name = it.getStringExtra("album_name");
         title = (TextView) findViewById(R.id.bar_title);
         title.setText(album_name);
 
-        mTools = new SharePrefrencesTools(this, album_name);
-        this.readImagFiles();
+
+        FolderDataHelper Folderdb = new FolderDataHelper(getApplicationContext());
+        SQLiteDatabase db=Folderdb.getReadableDatabase();
+        selectedPicture = Folderdb.GetPhoto(db,album_name);
+
+        for (int i = 0; i < selectedPicture.size() - 1; i++)
+        {
+            for (int j = i + 1; j < selectedPicture.size(); j++)
+            {
+                if (selectedPicture.get(i).equals(selectedPicture.get(j)))
+                {
+                    selectedPicture.remove(j);
+                    j--;
+                }
+            }
+        }
+
+
+       // mTools = new SharePrefrencesTools(this, album_name);
+       // this.readImagFiles();
 
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory()
                 .diskCacheFileNameGenerator(new Md5FileNameGenerator()).diskCacheSize(100 * 1024 * 1024)
                 .diskCacheFileCount(300).tasksProcessingOrder(QueueProcessingType.LIFO).build();
+
         ImageLoader.getInstance().init(config);
 
         gridview = (GridView) findViewById(R.id.gridview);
@@ -92,28 +114,30 @@ public class PhotoGridViewActivity extends Activity {
             {
                 for (int j = i + 1; j < selectedPicture.size(); j++)
                 {
-                    if (selectedPicture.get(i).equals(selectedPicture.get(j)))
-                    {
+                    if (selectedPicture.get(i).equals(selectedPicture.get(j))) {
                         selectedPicture.remove(j);
                         j--;
                     }
                 }
             }
+
+
+            String album_name = data.getStringExtra("album_name");
+            FolderDataHelper Folderdb = new FolderDataHelper(getApplicationContext());
+            SQLiteDatabase db=Folderdb.getReadableDatabase();
+
+            Folderdb.AddPhoto(db,album_name,selectedPicture);
             // 存储
-            this.saveImgFiles();
+            //this.saveImgFiles();
 
             adapter.notifyDataSetChanged();
         }
     }
 
 
-    private void readImagFiles() {
-        selectedPicture = mTools.getPicPaths();
-    }
+    //private void readImagFiles() {selectedPicture = mTools.getPicPaths();}
 
-    private void saveImgFiles() {
-        mTools.savePicPaths(selectedPicture);
-    }
+    //private void saveImgFiles() {mTools.savePicPaths(selectedPicture);}
 
     class GridAdapter extends BaseAdapter {
         LayoutParams params = new AbsListView.LayoutParams(200, 200);
@@ -149,7 +173,10 @@ public class PhotoGridViewActivity extends Activity {
     private class SelectPictureClickListener implements View.OnClickListener{
         @Override
         public void onClick(View view) {
-            startActivityForResult(new Intent(PhotoGridViewActivity.this, SelectPictureActivity.class), REQUEST_PICK);
+            Intent Selectphoto = new Intent(PhotoGridViewActivity.this, SelectPictureActivity.class);
+
+            Selectphoto.putExtra("album_name",PhotoGridViewActivity.this.album_name);
+            startActivityForResult(Selectphoto, REQUEST_PICK);
         }
     }
     private class SelectBackClickListener implements View.OnClickListener{
