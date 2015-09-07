@@ -23,6 +23,7 @@ import safe17.weitudevelop.R;
 import safe17.weitudevelop.tool.BitmapUtils;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 /**
  * Created by ouxuewen on 2015/9/5.
@@ -41,7 +42,8 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private TextView picturePosition = null;
     private ImageView btnBack = null;
     private ArrayList<String> position_array = new ArrayList<String>();
-    private boolean boFullScreen = false;
+    private boolean boFullScreen = true;
+    private String strPicturePosition = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +65,44 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         title_layout = (LinearLayout)findViewById(R.id.title_layout);
         bottom_layout = (RelativeLayout)findViewById(R.id.bottom_layout);
         picturePosition = (TextView)findViewById(R.id.picture_name);
-        String strPicturePosition = String.valueOf(first_position) + "/" + String.valueOf(position_array.size());
+        strPicturePosition = String.valueOf(first_position + 1) + "/" + String.valueOf(position_array.size());
         picturePosition.setText(strPicturePosition);
 
         mViewPager.setAdapter(new MyAdapter());
         mViewPager.setCurrentItem(first_position);
-        mViewPager.setOnPageChangeListener(this);
+        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int arg0) {
+                //activity从1到2滑动，2被加载后掉用此方法
+                strPicturePosition = String.valueOf(arg0 + 1) + "/" + String.valueOf(position_array.size());
+                picturePosition.setText(strPicturePosition);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                //从1到2滑动，在1滑动前调用
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                //状态有三个0空闲，1是增在滑行中，2目标加载完毕
+                /**
+                 * Indicates that the pager is in an idle, settled state. The current page
+                 * is fully in view and no animation is in progress.
+                 */
+                //public static final int SCROLL_STATE_IDLE = 0;
+                /**
+                 * Indicates that the pager is currently being dragged by the user.
+                 */
+                //public static final int SCROLL_STATE_DRAGGING = 1;
+                /**
+                 * Indicates that the pager is in the process of settling to a final position.
+                 */
+                //public static final int SCROLL_STATE_SETTLING = 2;
+
+            }
+        });
 
         btnBack = (ImageView)findViewById(R.id.back);
         btnBack.setOnClickListener(new GoBackClickListener());
@@ -85,24 +119,21 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!boFullScreen)
-                {
-
+                if (boFullScreen) {
                     title_layout.setVisibility(View.GONE);
                     bottom_layout.setVisibility(View.GONE);
-
-                    boFullScreen = true;
+                    boFullScreen = false;
                 }
                 else
                 {
                     title_layout.setVisibility(View.VISIBLE);
                     bottom_layout.setVisibility(View.VISIBLE);
-
-                    boFullScreen = false;
+                    boFullScreen = true;
                 }
 
             }
         });
+
         return imageView;
     }
 
@@ -180,10 +211,9 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
 
         @Override
         public void destroyItem(View container, int position, Object object) {
-            ((ViewPager)container).removeView(imageIdList.get(position));
+            ((ViewPager) container).removeView(imageIdList.get(position));
 
         }
-
         /**
          * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键
          */
