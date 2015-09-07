@@ -6,9 +6,16 @@ import android.view.LayoutInflater;
 import android.support.v4.app.Fragment;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import safe17.weitudevelop.R;
 
@@ -16,9 +23,6 @@ import safe17.weitudevelop.R;
  * Created by lidecai on 2015/8/31.
  */
 public class AboutUsFragment extends Fragment {
-    private ListView AboutList;
-    private SimpleAdapter simpleAdapter;
-    private  static final String[] COUNTRIES=new String[]{"中国","俄罗斯","英国","法国"};
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,10 +35,6 @@ public class AboutUsFragment extends Fragment {
         TextView tittle_text = (TextView) getActivity().findViewById(R.id.bar_title);
         tittle_text.setText("关于");
 
-//        View view = inflater.inflate(R.layout.fragment_default, null);
-//        AboutList = (ListView) view.findViewById(R.id.about_list);
-//        simpleAdapter = new SimpleAdapter(getActivity(), COUNTRIES, R.layout.fragment_default);
-//        AboutList.setAdapter(simpleAdapter);
 
         return inflater.inflate(R.layout.fragment_aboutus, null);
     }
