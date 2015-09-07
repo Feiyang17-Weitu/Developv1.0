@@ -79,14 +79,15 @@ public class ModifyPasswordFragment extends Fragment
                         Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
 
                         Intent act=new Intent(getActivity(),PowerOnActivity.class);
+                        act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(act);
                     }
                 }
                 else
                 {
                     Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
-
                     Intent act=new Intent(getActivity(),MainActivity.class);
+                    act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(act);
                 }
 
@@ -95,6 +96,7 @@ public class ModifyPasswordFragment extends Fragment
 
         return view;
     }
+
 
 
 }
