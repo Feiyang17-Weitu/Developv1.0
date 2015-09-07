@@ -5,12 +5,16 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by lidecai on 2015/9/6.
@@ -21,17 +25,27 @@ public class FolderDataHelper extends SQLiteOpenHelper{
 
     public FolderDataHelper(Context context)
     {
-        super(context,DB_NAME,null,version);
+        super(context, DB_NAME, null, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         System.out.println("create a database");
-        String sql = "create table Folder(name varchar(50) primary key ,isprivate integer not null,picturenum integer not null)";
+        String sql = "create table Folder(name varchar(50) primary key ,path varchar(50),isprivate integer not null,picturenum integer not null)";
         db.execSQL(sql);
 
-        String sql2="insert into Folder(name,isprivate,picturenum) values('默认相册','0',0)";
+        String sql1 = "create table Photo(id integer PRIMARY KEY autoincrement,name varchar(50),path varchar(50))";
+        db.execSQL(sql1);
+
+        String sql2="insert into Folder(name,path,isprivate,picturenum) values('默认相册','" + GetPath() + "','0',0)";
+
+
+        String sdcard_path = Environment.getExternalStorageDirectory().getPath();
+        File destDir = new File(sdcard_path + "/secphoto/" + GetPath());
+        if (!destDir.exists()) {destDir.mkdirs();}
+
         db.execSQL(sql2);
+
     }
 
     @Override
@@ -47,15 +61,32 @@ public class FolderDataHelper extends SQLiteOpenHelper{
             val=1;
         else
             val=0;
-        String sql="insert into Folder(name,isprivate,picturenum) values('"+name+"','"+ val +"',0)";
+        String sql="insert into Folder(name,path,isprivate,picturenum) values('"+name+"','"+GetPath()+ "','"+ val +"',0)";
+
+        String sdcard_path = Environment.getExternalStorageDirectory().getPath();
+        File destDir = new File(sdcard_path + "/secphoto/" + GetPath());
+        if (!destDir.exists()) {destDir.mkdirs();}
+
         db.execSQL(sql);
+    }
+
+    private static String GetPath(){
+        String str="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        Random random=new Random();
+        StringBuffer sb=new StringBuffer();
+        for(int i=0;i<10;i++){
+            int number=random.nextInt(62);
+            sb.append(str.charAt(number));
+        }
+        return sb.toString();
     }
 
     public int getFolderPicNum(SQLiteDatabase db,String name)
     {
-        Cursor c=db.rawQuery("select picturenum from Folder where name='"+name+"'", null);
+        Cursor c=db.rawQuery("select picturenum from Folder where name='" + name + "'", null);
         return c.getInt(0);
     }
+
 
     //增加照片数量,第一个为数据库名称,第二个为文件夹名字，第三个为添加后的数量
     public void FolderAddNum(SQLiteDatabase db,String name,int addnum)
@@ -63,6 +94,39 @@ public class FolderDataHelper extends SQLiteOpenHelper{
         String sql="update Folder set picturenum= " + (addnum+getFolderPicNum(db,name))+ " where name='"+name+"'";
         db.execSQL(sql);
     }
+
+
+    public void AddPhoto(SQLiteDatabase db,String album_name,ArrayList<String> photo_list){
+
+      //  if(this.isPrivateFolder(db,album_name)) {
+            //String sql="";
+            //Cursor c=db.rawQuery("select path from Folder where name='"+ album_name +"'", null);
+            //String album_path = c.getString(0);
+            //String folder_path = c.getString(c.getColumnIndex("path"));
+            //String sdcard_rootpath = Environment.getExternalStorageDirectory().getPath();
+       // }
+
+        String sql;
+        for(int i=0;i<photo_list.size();i++) {
+            sql = "insert into Photo(name,path) values('" + album_name + "','" + photo_list.get(i) + "')";
+
+            db.execSQL(sql);
+        }
+    }
+
+    public ArrayList<String> GetPhoto(SQLiteDatabase db,String album_name){
+        String sql = "select path from Photo where name='" + album_name + "'";
+        Cursor c = db.rawQuery(sql,null);
+        ArrayList<String> photo_list = new ArrayList<String>();
+        while(c.moveToNext()) {
+            photo_list.add(c.getString(c.getColumnIndex("path")));
+
+        }
+        return photo_list;
+    }
+
+
+
 
     public void deleteFolder(SQLiteDatabase db,String name)
     {
@@ -82,18 +146,20 @@ public class FolderDataHelper extends SQLiteOpenHelper{
         }
     }
 
-    public List<Map<String,String>> converDBtoList(SQLiteDatabase db)
-    {
-        Cursor cursor=db.rawQuery("select name , picturenum from Folder",null);
-        ArrayList<Map<String,String>> result=new ArrayList<Map<String, String>>();
-        while (cursor.moveToNext())
-        {
-            Map<String,String> map=new HashMap<>();
-            map.put("album_name", cursor.getString(0));
-            String tmp=cursor.getInt(1) +"张照片";
-            //Log.i(tmp,tmp);
-            map.put("photo_num",tmp);
+
+    private boolean moveFile(String srcFileName, String destDirName) {
+        File srcFile = new File(srcFileName);
+        if(!srcFile.exists() || !srcFile.isFile())
+            return false;
+
+        File destDir = new File(destDirName);
+        if (!destDir.exists())
+            destDir.mkdirs();
+
+        return srcFile.renameTo(new File(destDirName + File.separator + srcFile.getName()));
         }
-        return result;
-    }
+
+
+
+
 }

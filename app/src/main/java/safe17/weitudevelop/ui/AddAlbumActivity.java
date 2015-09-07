@@ -116,8 +116,9 @@ public class AddAlbumActivity extends Activity {
                     else
                     {
                         mTools.saveFakePassword(CreatedAlbumPasswd);
-                        Toast.makeText(getApplicationContext(), "成功设定隐私相册", Toast.LENGTH_LONG).show();
                         Folderdb.AddFolder(db, CreatedAlbumName, true);
+                        Toast.makeText(getApplicationContext(), "成功设定隐私相册", Toast.LENGTH_LONG).show();
+
                         isPrivateAlbum=true;
                         finish();
                         //Folderdb.close();
