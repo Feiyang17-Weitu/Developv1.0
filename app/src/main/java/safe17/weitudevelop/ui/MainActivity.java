@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import safe17.weitudevelop.R;
+import safe17.weitudevelop.tool.RsaTool;
 import safe17.weitudevelop.tool.SharePrefrencesTools;
 import safe17.weitudevelop.tool.PublicData;
 
@@ -39,6 +40,20 @@ public class MainActivity extends Activity {
                 String welcome_mes = "输入您的密码";
                 myTextView.setText(welcome_mes);
                 PublicData.FirstLogin=false;
+
+
+
+                String rootpath = getFilesDir().getPath();
+                String publictkey = rootpath + "public.key";
+                String privatekey = rootpath + "private.key";
+
+                RsaTool rsatool = new RsaTool();
+
+                try {
+                    rsatool.makekeyfile(publictkey, privatekey);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             btnlogin = (Button) findViewById(R.id.BtnLogin);
