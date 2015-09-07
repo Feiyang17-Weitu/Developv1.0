@@ -1,38 +1,29 @@
 package safe17.weitudevelop.ui;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.GridView;
-import java.util.ArrayList;
-
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView.ScaleType;
-import android.widget.Toast;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
-import safe17.weitudevelop.R;
 
+import java.util.ArrayList;
+
+import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.FolderDataHelper;
-import safe17.weitudevelop.tool.SharePrefrencesTools;
 
 
 
@@ -128,7 +119,7 @@ public class PhotoGridViewActivity extends Activity {
 
             String album_name = data.getStringExtra("album_name");
           //  Log.i("相册值：", album_name);
-            Toast.makeText(getApplicationContext(), "相册位于："+album_name+"counter:"+counter, Toast.LENGTH_LONG).show();
+//            Toast.makeText(getApplicationContext(), "相册位于："+album_name+"counter:"+counter, Toast.LENGTH_LONG).show();
             FolderDataHelper Folderdb = new FolderDataHelper(getApplicationContext());
             SQLiteDatabase db=Folderdb.getReadableDatabase();
 

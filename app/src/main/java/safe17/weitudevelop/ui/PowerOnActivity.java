@@ -1,21 +1,22 @@
 package safe17.weitudevelop.ui;
+
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.FolderDataHelper;
@@ -36,8 +39,8 @@ import safe17.weitudevelop.tool.PublicData;
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener
 {
 
-    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "关于", "注销"};
-    public static final String[] FAKETITLES = {"返回相册", "修改密码", "关于", "注销"};
+    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "关于", "退出"};
+    public static final String[] FAKETITLES = {"返回相册", "修改密码", "关于", "退出"};
     private int[] imageIds = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.passwor_false,R.mipmap.about,R.mipmap.exit};
     private int[] imageIdsFake = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.about,R.mipmap.exit};
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
