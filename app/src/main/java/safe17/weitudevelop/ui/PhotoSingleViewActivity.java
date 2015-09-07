@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,11 +33,14 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private android.support.v4.view.ViewPager mViewPager;
 
     private List<ImageView> imageIdList;
+    private LinearLayout title_layout;
+    private RelativeLayout bottom_layout;
+
     private int first_position;
     private Button btnDelPicture = null;
     private Button btnTransferPicture = null;
     private TextView picturePosition = null;
-    private Button btnBack = null;
+    private ImageView btnBack = null;
     private ArrayList<String> position_array = new ArrayList<String>();
     private boolean boFullScreen = false;
     private String strPicturePosition = "";
@@ -43,7 +48,6 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.photo_single_view);
         mViewPager = (ViewPager)findViewById(R.id.vf_photo);
 
@@ -58,7 +62,8 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         for (int i=0;i<position_array.size();i++){
             imageIdList.add(getBitmap(position_array.get(i)));
         }
-
+        title_layout = (LinearLayout)findViewById(R.id.title_layout);
+        bottom_layout = (RelativeLayout)findViewById(R.id.bottom_layout);
         picturePosition = (TextView)findViewById(R.id.picture_name);
         strPicturePosition = String.valueOf(first_position + 1) + "/" + String.valueOf(position_array.size());
         picturePosition.setText(strPicturePosition);
@@ -99,7 +104,7 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
             }
         });
 
-        btnBack = (Button)findViewById(R.id.back);
+        btnBack = (ImageView)findViewById(R.id.back);
         btnBack.setOnClickListener(new GoBackClickListener());
 
         btnDelPicture = (Button)findViewById(R.id.del_picture);
@@ -109,30 +114,27 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private ImageView getBitmap(String fileName) {
 
         ImageView imageView  = new ImageView(this);
-        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 500));
+        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 800));
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!boFullScreen)
                 {
-                    btnBack.setVisibility(View.INVISIBLE);
-                    picturePosition.setVisibility(View.INVISIBLE);
-                    btnTransferPicture.setVisibility(View.INVISIBLE);
-                    btnDelPicture.setVisibility(View.INVISIBLE);
+
+                    title_layout.setVisibility(View.GONE);
+                    bottom_layout.setVisibility(View.GONE);
 
                     boFullScreen = true;
                 }
                 else
                 {
-                    btnBack.setVisibility(View.VISIBLE);
-                    picturePosition.setVisibility(View.VISIBLE);
-                    btnTransferPicture.setVisibility(View.VISIBLE);
-                    btnDelPicture.setVisibility(View.VISIBLE);
+                    title_layout.setVisibility(View.VISIBLE);
+                    bottom_layout.setVisibility(View.VISIBLE);
+
                     boFullScreen = false;
                 }
 
-//                Toast.makeText(PhotoSingleViewActivity.this,"点击了" + mViewPager.getCurrentItem(),Toast.LENGTH_SHORT).show();
             }
         });
 
