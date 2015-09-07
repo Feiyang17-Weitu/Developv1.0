@@ -100,6 +100,8 @@ public class PhotoGridViewActivity extends Activity {
         gridview.setAdapter(adapter);
     }
 
+
+
     @SuppressWarnings("unchecked")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

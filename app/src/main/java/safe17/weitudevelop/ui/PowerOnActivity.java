@@ -177,7 +177,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                     case 3:
                         fragment = new AboutUsFragment();
                         break;
-                    case 5: {
+                    case 4: {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -203,12 +203,9 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new ModifyFakePasswordFragment();
                         break;
                     case 2:
-                        fragment = new FeedBackFragment();
-                        break;
-                    case 3:
                         fragment = new AboutUsFragment();
                         break;
-                    case 4:
+                    case 3:
                     {
                         Intent intent = new Intent(Intent.ACTION_MAIN);
                         intent.addCategory(Intent.CATEGORY_HOME);
