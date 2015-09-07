@@ -36,6 +36,7 @@ public class DefaultFragment extends Fragment {
     private AltColorAdapter simpleAdapter;
 
 
+   // public String data[][] = new String[][]{{"默认相册","1张照片"}};
    List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
     public void getListData()
@@ -61,6 +62,7 @@ public class DefaultFragment extends Fragment {
                                int[] to) {
             super(getActivity(), list, R.layout.photo_list,
                     new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
+            // TODO Auto-generated constructor stub
         }
 
         @Override
@@ -112,6 +114,8 @@ public class DefaultFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
+            // TODO Auto-generated method stub
+            //Log.i("ListView", "Item " + position);
             Map<String, String> map = (Map<String, String>) simpleAdapter.getItem(position);
             String album_name = map.get("album_name");
 

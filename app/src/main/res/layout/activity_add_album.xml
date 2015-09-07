@@ -48,8 +48,10 @@
             android:layout_height="40dp"
             android:layout_marginLeft="35dp"
             android:layout_marginRight="35dp"
-            android:layout_marginTop="15dp"
-            android:textSize="18sp" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            style="@style/EditEnter"
+             />
         <TextView
             android:id="@+id/inputHint"
             android:layout_width="fill_parent"
@@ -86,6 +88,9 @@
             android:layout_marginRight="35dp"
             android:inputType="numberPassword"
             android:hint="第一次使用请设密码"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            style="@style/EditEnter"
             />
         <Button
             android:id="@+id/FinishAlbum"

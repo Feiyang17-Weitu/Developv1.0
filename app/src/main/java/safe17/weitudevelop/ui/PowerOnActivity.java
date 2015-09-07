@@ -16,8 +16,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -34,11 +37,12 @@ import safe17.weitudevelop.tool.PublicData;
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
 
-    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "帮助与反馈", "关于", "退出"};
-    public static final String[] FAKETITLES = {"返回相册", "修改密码","帮助与反馈", "关于", "退出"};
+    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "关于", "退出"};
+    public static final String[] FAKETITLES = {"返回相册", "修改密码", "关于", "退出"};
+    private int[] imageIds = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.passwor_false,R.mipmap.about,R.mipmap.exit};
+    private int[] imageIdsFake = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.about,R.mipmap.exit};
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
-
 
 
 
@@ -56,10 +60,35 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
         mMenu_layout_left = (RelativeLayout) findViewById(R.id.menu_layout_left);
         ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
 
-        if(PublicData.LoginInTruePasswd)
-             menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, TITLES));
-        else
-            menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, FAKETITLES));
+
+        List<Map<String, Object>> listItems = new ArrayList<Map<String,Object>>();/*在数组中存放数据*/
+        for(int i=0;i<TITLES.length;i++)
+        {
+            Map<String, Object> listItem = new HashMap<String, Object>();
+            listItem.put("header", imageIds[i]);//加入图片
+            listItem.put("name", TITLES[i]);
+            listItems.add(listItem);
+        }
+        List<Map<String, Object>> listItems_fake = new ArrayList<Map<String,Object>>();/*在数组中存放数据*/
+        for(int i=0;i<FAKETITLES.length;i++)
+        {
+            Map<String, Object> listItem_Fake = new HashMap<String, Object>();
+            listItem_Fake.put("header", imageIdsFake[i]);//加入图片
+            listItem_Fake.put("name", FAKETITLES[i]);
+            listItems_fake.add(listItem_Fake);
+        }
+
+        if(PublicData.LoginInTruePasswd){
+            SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems, R.layout.leftdrawer_item,
+                    new String[]{"header", "name"}, new int[]{R.id.drawer_icon,R.id.drawer_text});
+            menu_listview_l.setAdapter(simpleAdapter);
+        }
+        else{
+            SimpleAdapter simpleAdapter_fake = new SimpleAdapter(this, listItems_fake, R.layout.leftdrawer_item,
+                    new String[]{"header", "name"}, new int[]{R.id.drawer_icon,R.id.drawer_text});
+            menu_listview_l.setAdapter(simpleAdapter_fake);
+        }
+
 
 
         //监听菜单
@@ -145,12 +174,9 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new ModifyFakePasswordFragment();
                         break;
                     case 3:
-                        fragment = new FeedBackFragment();
-                        break;
-                    case 4:
                         fragment = new AboutUsFragment();
                         break;
-                    case 5: {
+                    case 4: {
                         //android.os.Process.killProcess(android.os.Process.myPid());
                         System.exit(0);
                         break;
@@ -193,20 +219,6 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
 
     private class onClickLisentertmp implements View.OnClickListener {
 
-
-        //        public void onClick(View v) {
-//            // TODO Auto-generated method stub
-//            switch (v.getId()) {
-//                case R.id.activity_add_album://添加相册
-//
-//                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
-//                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();
-//                    break;
-//
-//                default:
-//                    break;
-//            }
-//        }
         @Override
         public void onClick(View view) {
 
