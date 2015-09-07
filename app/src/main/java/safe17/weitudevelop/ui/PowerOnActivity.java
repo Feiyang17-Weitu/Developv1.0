@@ -18,12 +18,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Toast;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.FolderDataHelper;
 import safe17.weitudevelop.fragment.AboutUsFragment;
@@ -36,25 +30,18 @@ import safe17.weitudevelop.tool.PublicData;
 
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
-
-    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "帮助与反馈", "关于", "注销"};
-    public static final String[] FAKETITLES = {"返回相册", "修改密码","帮助与反馈", "关于", "注销"};
+    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "帮助与反馈", "关于", "退出"};
+    public static final String[] FAKETITLES = {"返回相册", "修改密码","帮助与反馈", "关于", "退出"};
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
-
-
-
-
- //   public List<Map<String, String>> dblist = Folderdb.converDBtoList(Folder_Data);
-
     private ImageView add_album;
-
     private ActionBarDrawerToggle mDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_power_on);
+
         mDrawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mMenu_layout_left = (RelativeLayout) findViewById(R.id.menu_layout_left);
         ListView menu_listview_l = (ListView) mMenu_layout_left.findViewById(R.id.menu_listView_l);
@@ -63,7 +50,6 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
              menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, TITLES));
         else
             menu_listview_l.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item1, FAKETITLES));
-
 
         //监听菜单
         menu_listview_l.setOnItemClickListener(new DrawerItemClickListenerLeft());
@@ -79,7 +65,6 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                 } else {
                     mDrawer_layout.openDrawer(mMenu_layout_left);
                     mDrawer_layout.bringToFront();
-//                    photoList.setVisibility(View.GONE);
                 }
             }
         });
@@ -106,7 +91,6 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
 
         FolderDataHelper Folderdb = new FolderDataHelper(this);
         SQLiteDatabase Folder_Data=Folderdb.getReadableDatabase();
-
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment fragment = new DefaultFragment();
         ft.replace(R.id.fragment_layout, fragment);
@@ -119,6 +103,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
         super.onResume();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         Fragment fragment = new DefaultFragment();
+        PublicData.isMainPage=true;
         ft.replace(R.id.fragment_layout, fragment);
         ft.commit();
     }
@@ -140,6 +125,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                 switch (position) {
                     case 0:
                         fragment = new DefaultFragment();
+                        PublicData.isMainPage=true;
                         break;
                     case 1:
                         fragment = new ModifyPasswordFragment();
@@ -154,7 +140,10 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 5: {
-                        //android.os.Process.killProcess(android.os.Process.myPid());
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         System.exit(0);
                         break;
                     }
@@ -170,6 +159,7 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                 switch (position) {
                     case 0:
                         fragment = new DefaultFragment();
+                        PublicData.isMainPage=true;
                         break;
                     case 1:
                         fragment = new ModifyFakePasswordFragment();
@@ -181,9 +171,15 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                         fragment = new AboutUsFragment();
                         break;
                     case 4:
-                        //android.os.Process.killProcess(android.os.Process.myPid());
+                    {
+                        Intent intent = new Intent(Intent.ACTION_MAIN);
+                        intent.addCategory(Intent.CATEGORY_HOME);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
                         System.exit(0);
                         break;
+                    }
+
                     default:
                         break;
                 }
@@ -208,41 +204,16 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
      */
     private static Boolean isExit = false;
     private void exitBy2Click() {
-        Timer tExit = null;
-        if (isExit == false) {
-            isExit = true; // 准备退出
-            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
-            tExit = new Timer();
-            tExit.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    isExit = false; // 取消退出
-                }
-            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
-
-        } else {
-            this.finish();
-            this.getParent().finish();
-            System.exit(0);
-        }
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            Fragment fragment = new DefaultFragment();
+            PublicData.isMainPage=true;
+            ft.replace(R.id.fragment_layout, fragment);
+            ft.commit();
+            mDrawer_layout.closeDrawer(mMenu_layout_left);
+            Toast.makeText(getApplicationContext(), "为安全起见,请使用左上角菜单-退出按钮退出程序.", Toast.LENGTH_LONG).show();
     }
 
     private class onClickLisentertmp implements View.OnClickListener {
-
-
-        //        public void onClick(View v) {
-//            // TODO Auto-generated method stub
-//            switch (v.getId()) {
-//                case R.id.activity_add_album://添加相册
-//
-//                    new AlertDialog.Builder(PowerOnActivity.this).setTitle("请输入相册名")
-//                            .setView(new EditText(PowerOnActivity.this)).setPositiveButton("添加", null).setNegativeButton("取消", null).show();
-//                    break;
-//
-//                default:
-//                    break;
-//            }
-//        }
         @Override
         public void onClick(View view) {
 

@@ -1,6 +1,9 @@
 package safe17.weitudevelop.fragment;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -20,7 +23,6 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -40,30 +42,36 @@ public class DefaultFragment extends Fragment {
     private ListView photoList;
     private AltColorAdapter simpleAdapter;
 
-
-   // public String data[][] = new String[][]{{"默认相册","1张照片"}};
-   List<Map<String, String>> list = new ArrayList<Map<String,String>>();
+    List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
     public void getListData()
     {
         FolderDataHelper Folderdb= new FolderDataHelper(getActivity().getApplicationContext());
         SQLiteDatabase db=Folderdb.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select name,picturenum,isprivate from Folder", null);
+        Cursor cursor=db.rawQuery("select name , picturenum , isprivate from Folder", null);
         while (cursor.moveToNext())
         {
             Map<String, String> map = new HashMap<String, String>();
+
+            String tname=cursor.getString(0);
             String tmp=cursor.getInt(1) +"张照片";
-            Log.i(tmp, tmp);
-            map.put("album_name", cursor.getString(0));
+            String tprivate=String.valueOf(cursor.getInt(2));
+           // String
+            map.put("album_name", tname);
             map.put("photo_num", tmp);
-            map.put("is_private", String.valueOf(cursor.getInt(2)));
+            map.put("is_private", tprivate);
+
+            Log.i("相片数量:", map.get("photo_num"));
+            Log.i("相册名字:", map.get("album_name"));
+           // Log.i("是否隐私:", map.get("is_private"));
             if((PublicData.LoginInTruePasswd) || map.get("is_private").toString().equals("0"))
                 this.list.add(map);
         }
         db.close();
     }
 
-    public class AltColorAdapter extends SimpleAdapter {
+    public class AltColorAdapter extends SimpleAdapter
+    {
         public AltColorAdapter(Context context,
                                List<? extends Map<String, ?>> data, int resource, String[] from,
                                int[] to) {
@@ -80,11 +88,10 @@ public class DefaultFragment extends Fragment {
                 map=list.get(position);
                 if(PublicData.LoginInTruePasswd) {
                     if (map.get("is_private").equals("1")) {
-                        TextView album_btr = (TextView) localView.findViewById(R.id.album_name);
+                        //TextView album_btr = (TextView) localView.findViewById(R.id.album_name);
                         ImageView album_icn = (ImageView) localView.findViewById(R.id.photoshow);
-
                         // localView.setVisibility(View.GONE);
-                        album_btr.setTextColor(Color.RED);
+                        //album_btr.setTextColor(Color.RED);
                         album_icn.setImageResource(R.mipmap.eye);
                     } else {
                         //  localView.setVisibility(View.VISIBLE);
@@ -110,13 +117,7 @@ public class DefaultFragment extends Fragment {
         photoList = (ListView) view.findViewById(R.id.photo_list);
         photoList.setOnItemClickListener(new OnItemClickedListener());
         photoList.setOnItemLongClickListener(new OnItemLongClickListener());
-        /*
-        for(int x=0;x < data.length;x++){
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("album_name", String.valueOf(data[x][0]));
-            map.put("photo_num", String.valueOf(data[x][1]));
-            this.list.add(map);
-        }*/
+
        getListData();
        simpleAdapter = new AltColorAdapter(getActivity(), list, R.layout.photo_list,
                 new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
@@ -124,20 +125,6 @@ public class DefaultFragment extends Fragment {
         return view;
     }
 
-/*
-    @Override
-    public void onResume()
-    {
-            super.onResume();
-            photoList.setAdapter(null);
-
-            getListData();
-            simpleAdapter = new SimpleAdapter(getActivity(), list, R.layout.photo_list,
-                    new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
-         //Log.i(getActivity().toString(), getActivity().toString());
-            photoList.setAdapter(simpleAdapter);
-
-    }*/
    private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener
     {
         @Override
@@ -160,9 +147,13 @@ public class DefaultFragment extends Fragment {
                         FolderDataHelper Folderdb = new FolderDataHelper(getActivity().getApplicationContext());
                         SQLiteDatabase db = Folderdb.getReadableDatabase();
                         Folderdb.deleteFolder(db, findername);
+
+                        //自动刷新
+                        AltColorAdapter sAdapter = (AltColorAdapter) photoList.getAdapter();
+
                         Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_LONG).show();
-
-
+                        Intent act=new Intent(getActivity(),PowerOnActivity.class);
+                        startActivity(act);
                     }
                 }
             });
@@ -183,7 +174,7 @@ public class DefaultFragment extends Fragment {
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
             // TODO Auto-generated method stub
-            //Log.i("ListView", "Item " + position);
+            Log.i("ListView", "Item:" + position);
             Map<String, String> map = (Map<String, String>) simpleAdapter.getItem(position);
             String album_name = map.get("album_name");
 

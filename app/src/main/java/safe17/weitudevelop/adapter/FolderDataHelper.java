@@ -37,14 +37,14 @@ public class FolderDataHelper extends SQLiteOpenHelper{
         String sql1 = "create table Photo(id integer PRIMARY KEY autoincrement,name varchar(50),path varchar(50))";
         db.execSQL(sql1);
 
-        String sql2="insert into Folder(name,path,isprivate,picturenum) values('默认相册','" + GetPath() + "','0',0)";
+        //String sql2="insert into Folder(name,path,isprivate,picturenum) values('默认相册','" + GetPath() + "',0,0)";
 
 
         String sdcard_path = Environment.getExternalStorageDirectory().getPath();
         File destDir = new File(sdcard_path + "/secphoto/" + GetPath());
         if (!destDir.exists()) {destDir.mkdirs();}
 
-        db.execSQL(sql2);
+        //db.execSQL(sql2);
 
     }
 
@@ -61,7 +61,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
             val=1;
         else
             val=0;
-        String sql="insert into Folder(name,path,isprivate,picturenum) values('"+name+"','"+GetPath()+ "','"+ val +"',0)";
+        String sql="insert into Folder(name,path,isprivate,picturenum) values('"+name+"','"+GetPath()+ "',"+ val +",0)";
 
         String sdcard_path = Environment.getExternalStorageDirectory().getPath();
         File destDir = new File(sdcard_path + "/secphoto/" + GetPath());
@@ -136,7 +136,7 @@ public class FolderDataHelper extends SQLiteOpenHelper{
     public boolean isPrivateFolder(SQLiteDatabase db,String name)
     {
         Cursor c=db.rawQuery("select isprivate from Folder where name='"+name+"'", null);
-        if(c.getString(0).equals("1"))
+        if(c.getInt(0)==1)
         {
             return true;
         }

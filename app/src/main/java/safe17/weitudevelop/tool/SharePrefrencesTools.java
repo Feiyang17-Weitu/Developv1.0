@@ -67,4 +67,6 @@ public class SharePrefrencesTools {
         editor.putString("fake_password", strFakePwd);
         editor.commit();
     }
+
+
 }
