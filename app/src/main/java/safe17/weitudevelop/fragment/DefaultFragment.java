@@ -73,34 +73,20 @@ public class DefaultFragment extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent)
-        {
-                View localView = super.getView(position, convertView, parent);
-                Map<String, String> map = new HashMap<String, String>();
-                map=list.get(position);
-                if(PublicData.LoginInTruePasswd) {
-                    if (map.get("is_private").equals("1")) {
-                        TextView album_btr = (TextView) localView.findViewById(R.id.album_name);
-                        ImageView album_icn = (ImageView) localView.findViewById(R.id.photoshow);
-                if(map.get("is_private").equals("1"))
-                {
-                    ImageView true_album_pic = (ImageView)localView.findViewById(R.id.photoshow);
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View localView = super.getView(position, convertView, parent);
+            Map<String, String> map = new HashMap<String, String>();
+            map = list.get(position);
+            if (PublicData.LoginInTruePasswd) {
+                if (map.get("is_private").equals("1")) {
+                    ImageView true_album_pic = (ImageView) localView.findViewById(R.id.photoshow);
                     true_album_pic.setImageResource(R.mipmap.eye);
-                }
-                else
-                {
-                    ImageView true_album_pic = (ImageView)localView.findViewById(R.id.photoshow);
+                } else {
+                    ImageView true_album_pic = (ImageView) localView.findViewById(R.id.photoshow);
                     true_album_pic.setImageResource(R.mipmap.picture);
                 }
                 return localView;
-
-                        // localView.setVisibility(View.GONE);
-                        album_btr.setTextColor(Color.RED);
-                        album_icn.setImageResource(R.mipmap.eye);
-                    } else {
-                        //  localView.setVisibility(View.VISIBLE);
-                    }
-                }
+            }
             return localView;
         }
     };
