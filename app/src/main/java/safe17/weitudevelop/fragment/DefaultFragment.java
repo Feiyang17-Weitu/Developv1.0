@@ -92,7 +92,6 @@ public class DefaultFragment extends Fragment {
                     ImageView true_album_pic = (ImageView) localView.findViewById(R.id.photoshow);
                     true_album_pic.setImageResource(R.mipmap.picture);
                 }
-                return localView;
             }
             return localView;
         }
