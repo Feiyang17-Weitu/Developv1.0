@@ -36,7 +36,6 @@ public class DefaultFragment extends Fragment {
     private AltColorAdapter simpleAdapter;
 
 
-   // public String data[][] = new String[][]{{"默认相册","1张照片"}};
    List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
     public void getListData()
@@ -62,7 +61,6 @@ public class DefaultFragment extends Fragment {
                                int[] to) {
             super(getActivity(), list, R.layout.photo_list,
                     new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
-            // TODO Auto-generated constructor stub
         }
 
         @Override
@@ -73,13 +71,13 @@ public class DefaultFragment extends Fragment {
                 map=list.get(position);
                 if(map.get("is_private").equals("1"))
                 {
-                    TextView album_btr=(TextView)localView.findViewById(R.id.album_name);
-                   // localView.setVisibility(View.GONE);
-                    album_btr.setTextColor(Color.RED);
+                    ImageView true_album_pic = (ImageView)localView.findViewById(R.id.photoshow);
+                    true_album_pic.setImageResource(R.mipmap.eye);
                 }
                 else
                 {
-                  //  localView.setVisibility(View.VISIBLE);
+                    ImageView true_album_pic = (ImageView)localView.findViewById(R.id.photoshow);
+                    true_album_pic.setImageResource(R.mipmap.picture);
                 }
                 return localView;
 
@@ -101,13 +99,7 @@ public class DefaultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_default, null);
         photoList = (ListView) view.findViewById(R.id.photo_list);
         photoList.setOnItemClickListener(new OnItemClickedListener());
-        /*
-        for(int x=0;x < data.length;x++){
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("album_name", String.valueOf(data[x][0]));
-            map.put("photo_num", String.valueOf(data[x][1]));
-            this.list.add(map);
-        }*/
+
        getListData();
        simpleAdapter = new AltColorAdapter(getActivity(), list, R.layout.photo_list,
                 new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
@@ -115,30 +107,11 @@ public class DefaultFragment extends Fragment {
         return view;
     }
 
-/*
-    @Override
-    public void onResume()
-    {
-            super.onResume();
-            photoList.setAdapter(null);
-
-            getListData();
-            simpleAdapter = new SimpleAdapter(getActivity(), list, R.layout.photo_list,
-                    new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
-         //Log.i(getActivity().toString(), getActivity().toString());
-            photoList.setAdapter(simpleAdapter);
-
-    }*/
-
-
-
     private class OnItemClickedListener implements AdapterView.OnItemClickListener {
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            // TODO Auto-generated method stub
-            //Log.i("ListView", "Item " + position);
             Map<String, String> map = (Map<String, String>) simpleAdapter.getItem(position);
             String album_name = map.get("album_name");
 
