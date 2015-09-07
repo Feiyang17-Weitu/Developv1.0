@@ -4,6 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,6 +21,8 @@ import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.FolderDataHelper;
@@ -34,8 +37,8 @@ import safe17.weitudevelop.tool.PublicData;
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
 
-    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "帮助与反馈", "关于", "退出"};
-    public static final String[] FAKETITLES = {"返回相册", "修改密码","帮助与反馈", "关于", "退出"};
+    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "帮助与反馈", "关于", "注销"};
+    public static final String[] FAKETITLES = {"返回相册", "修改密码","帮助与反馈", "关于", "注销"};
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
     private RelativeLayout mMenu_layout_left;//左边抽屉
 
@@ -188,6 +191,39 @@ public class PowerOnActivity extends FragmentActivity implements OnItemClickList
                 ft.commit();
                 mDrawer_layout.closeDrawer(mMenu_layout_left);//关闭mMenu_layout
             }
+        }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // TODO Auto-generated method stub
+        if(keyCode == KeyEvent.KEYCODE_BACK)
+        {
+            exitBy2Click(); //调用双击退出函数
+        }
+        return false;
+    }
+    /**
+     * 双击退出函数
+     */
+    private static Boolean isExit = false;
+    private void exitBy2Click() {
+        Timer tExit = null;
+        if (isExit == false) {
+            isExit = true; // 准备退出
+            Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_SHORT).show();
+            tExit = new Timer();
+            tExit.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    isExit = false; // 取消退出
+                }
+            }, 2000); // 如果2秒钟内没有按下返回键，则启动定时器取消掉刚才执行的任务
+
+        } else {
+            this.finish();
+            this.getParent().finish();
+            System.exit(0);
         }
     }
 

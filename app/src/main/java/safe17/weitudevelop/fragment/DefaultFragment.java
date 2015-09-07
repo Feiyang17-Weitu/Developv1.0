@@ -1,6 +1,8 @@
 package safe17.weitudevelop.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,11 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +29,7 @@ import java.util.Map;
 
 import safe17.weitudevelop.R;
 import safe17.weitudevelop.adapter.FolderDataHelper;
+import safe17.weitudevelop.tool.PublicData;
 import safe17.weitudevelop.ui.PhotoGridViewActivity;
 import safe17.weitudevelop.ui.PowerOnActivity;
 
@@ -50,10 +55,12 @@ public class DefaultFragment extends Fragment {
             String tmp=cursor.getInt(1) +"张照片";
             Log.i(tmp, tmp);
             map.put("album_name", cursor.getString(0));
-            map.put("photo_num",tmp);
-            map.put("is_private",String.valueOf(cursor.getInt(2)));
-            this.list.add(map);
+            map.put("photo_num", tmp);
+            map.put("is_private", String.valueOf(cursor.getInt(2)));
+            if((PublicData.LoginInTruePasswd) || map.get("is_private").toString().equals("0"))
+                this.list.add(map);
         }
+        db.close();
     }
 
     public class AltColorAdapter extends SimpleAdapter {
@@ -71,18 +78,19 @@ public class DefaultFragment extends Fragment {
                 View localView = super.getView(position, convertView, parent);
                 Map<String, String> map = new HashMap<String, String>();
                 map=list.get(position);
-                if(map.get("is_private").equals("1"))
-                {
-                    TextView album_btr=(TextView)localView.findViewById(R.id.album_name);
-                   // localView.setVisibility(View.GONE);
-                    album_btr.setTextColor(Color.RED);
-                }
-                else
-                {
-                  //  localView.setVisibility(View.VISIBLE);
-                }
-                return localView;
+                if(PublicData.LoginInTruePasswd) {
+                    if (map.get("is_private").equals("1")) {
+                        TextView album_btr = (TextView) localView.findViewById(R.id.album_name);
+                        ImageView album_icn = (ImageView) localView.findViewById(R.id.photoshow);
 
+                        // localView.setVisibility(View.GONE);
+                        album_btr.setTextColor(Color.RED);
+                        album_icn.setImageResource(R.mipmap.eye);
+                    } else {
+                        //  localView.setVisibility(View.VISIBLE);
+                    }
+                }
+            return localView;
         }
     };
 
@@ -101,6 +109,7 @@ public class DefaultFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_default, null);
         photoList = (ListView) view.findViewById(R.id.photo_list);
         photoList.setOnItemClickListener(new OnItemClickedListener());
+        photoList.setOnItemLongClickListener(new OnItemLongClickListener());
         /*
         for(int x=0;x < data.length;x++){
             Map<String, String> map = new HashMap<String, String>();
@@ -129,8 +138,44 @@ public class DefaultFragment extends Fragment {
             photoList.setAdapter(simpleAdapter);
 
     }*/
+   private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener
+    {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
+                                long id) {
+            // TODO Auto-generated method stub
+            //Log.i("ListView", "Item " + position);
+            //Toast.makeText(getActivity().getApplicationContext(), position+"长按效果", Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder=new AlertDialog.Builder(getActivity()).setTitle("删除确认");
+            builder.setMessage("您是否删除该文件夹？");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Map<String, String> map = new HashMap<String, String>();
+                    map = list.get(position);
+                    if (map.get("album_name").toString().equals("默认相册")) {
+                        Toast.makeText(getActivity(), "默认相册不能删除！", Toast.LENGTH_LONG).show();
+                    } else {
+                        String findername = map.get("album_name").toString();
+                        FolderDataHelper Folderdb = new FolderDataHelper(getActivity().getApplicationContext());
+                        SQLiteDatabase db = Folderdb.getReadableDatabase();
+                        Folderdb.deleteFolder(db, findername);
+                        Toast.makeText(getActivity(), "删除成功！", Toast.LENGTH_LONG).show();
 
 
+                    }
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.show();
+            return true;
+        }
+    }
 
     private class OnItemClickedListener implements AdapterView.OnItemClickListener {
 

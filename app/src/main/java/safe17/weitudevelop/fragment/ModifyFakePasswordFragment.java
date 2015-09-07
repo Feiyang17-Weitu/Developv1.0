@@ -16,6 +16,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
+import safe17.weitudevelop.tool.PublicData;
 import safe17.weitudevelop.tool.SharePrefrencesTools;
 import safe17.weitudevelop.R;
 
@@ -38,44 +41,66 @@ public class ModifyFakePasswordFragment extends Fragment {
         ImageView right_button =  (ImageView) getActivity().findViewById(R.id.add_album);
         right_button.setVisibility(View.INVISIBLE);
         TextView tittle_text = (TextView) getActivity().findViewById(R.id.bar_title);
-        tittle_text.setText("修改伪密码");
 
-        View view= inflater.inflate(R.layout.fragment_modify_fakepassword, container, false);
+
+        final View view= inflater.inflate(R.layout.fragment_modify_fakepassword, container, false);
         //绑定对话框和确定按钮
         oldFakePasswd = (EditText)view.findViewById(R.id.old_fake_password);
         newFakePasswd = (EditText)view.findViewById(R.id.new_fake_password);
         BtnModifyPasswd = (Button)view.findViewById(R.id.BtnOk);
 
         mTools = new SharePrefrencesTools(getActivity(), "password_info");
+        if(PublicData.LoginInTruePasswd) {
+            tittle_text.setText("修改伪密码");
+            TextView origin=(TextView) view.findViewById(R.id.originPasswd);
+            origin.setVisibility(view.GONE);
+            oldFakePasswd.setVisibility(view.GONE);
+        }
+        else
+            tittle_text.setText("修改密码");
+
 
         BtnModifyPasswd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 oldFakePasswdStr = oldFakePasswd.getText().toString();
                 newFakePasswdStr = newFakePasswd.getText().toString();
-                //5次尝试机会
-                if(TryPasswd > 0) {
-                    //与原密码不符的情况
-                    if (!mTools.getFakePassword().equals(oldFakePasswdStr)) {
-                        TryPasswd--;
-                        Toast.makeText(getActivity(), "你输入的密码和原密码不符合，请重新输入!您还有" + TryPasswd + "次机会.", Toast.LENGTH_LONG).show();
-                    }
-                    //没有输入密码的情况
-                    else if(newFakePasswdStr.equals("")==true)
-                    {
-                        Toast.makeText(getActivity(), "您输入的密码为空，请重新输入..", Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        mTools.saveFakePassword(newFakePasswdStr);
-                        Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
-                    }
+
+                if(PublicData.LoginInTruePasswd)
+                {
+                    //oldFakePasswd.setVisibility(view.GONE);
+                    mTools.saveFakePassword(newFakePasswdStr);
+                    Toast.makeText(getActivity(), "修改伪密码成功！", Toast.LENGTH_LONG).show();
                 }
                 else
                 {
-                    Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
+                    //5次尝试机会
+                    if(TryPasswd > 0) {
+                        //与原密码不符的情况
+                        if (!mTools.getFakePassword().equals(oldFakePasswdStr)) {
+                            TryPasswd--;
+                            Toast.makeText(getActivity(), "你输入的密码和原密码不符合，请重新输入!您还有" + TryPasswd + "次机会.", Toast.LENGTH_LONG).show();
+                        }
+                        //没有输入密码的情况
+                        else if(newFakePasswdStr.equals("")==true)
+                        {
+                            Toast.makeText(getActivity(), "您输入的密码为空，请重新输入..", Toast.LENGTH_LONG).show();
+                        }
+                        else
+                        {
+                            mTools.saveFakePassword(newFakePasswdStr);
+                            Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
+                            getActivity().finish();
+                        }
+                     }
+                    else
+                    {
+                        Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
+                        getActivity().finish();
+                    }
 
                 }
+
 
             }
         });

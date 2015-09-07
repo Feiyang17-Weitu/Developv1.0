@@ -79,8 +79,8 @@ public class AddAlbumActivity extends Activity {
             InputHint.setVisibility(View.GONE);
             isPrivateChecked.setVisibility(View.GONE);
             InputPasswd.setVisibility(View.GONE);
-            FinishAlbum.setOnClickListener(new FinishAlbumListener());
         }
+        FinishAlbum.setOnClickListener(new FinishAlbumListener());
         //数据库类
         //----创建结束
     }
@@ -116,18 +116,17 @@ public class AddAlbumActivity extends Activity {
                     else
                     {
                         mTools.saveFakePassword(CreatedAlbumPasswd);
-                        Toast.makeText(getApplicationContext(), "成功设定隐私相册", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "成功新建相册.", Toast.LENGTH_LONG).show();
                         Folderdb.AddFolder(db, CreatedAlbumName, true);
                         isPrivateAlbum=true;
                         finish();
                         //Folderdb.close();
-
                     }
 
                 }
                 else
                 {
-                    Toast.makeText(getApplicationContext(), "成功创建密码并设定隐私相册", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "成功新建相册.", Toast.LENGTH_LONG).show();
                     Folderdb.AddFolder(db, CreatedAlbumName, false);
                     isPrivateAlbum=false;
                     finish();
