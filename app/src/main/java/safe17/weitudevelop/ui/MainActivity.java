@@ -28,34 +28,38 @@ public class MainActivity extends Activity {
     EditText password2;
     Button   btnlogin;
     public SharePrefrencesTools mTools;
-        @Override
+       @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-
             password1 = (EditText) findViewById(R.id.password1);
             password2 = (EditText) findViewById(R.id.password2);
             myTextView = (TextView) findViewById(R.id.title);
-            mTools = new SharePrefrencesTools(MainActivity.this, "password_info");
+    }
 
-            if (mTools != null && !mTools.getTurePassword().equals("") && PublicData.FirstLogin == true)
-            {
-                password2.setVisibility(View.GONE);
-                String welcome_mes = "输入您的密码";
-                myTextView.setText(welcome_mes);
-                PublicData.FirstLogin=false;
-                String rootpath = getFilesDir().getPath();
-                String publictkey = rootpath + "public.key";
-                String privatekey = rootpath + "private.key";
-                RsaTool rsatool = new RsaTool();
-                try {
-                    rsatool.makekeyfile(publictkey, privatekey);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mTools = new SharePrefrencesTools(MainActivity.this, "password_info");
+        if (mTools != null && !mTools.getTurePassword().equals(""))
+        {
+            password2.setVisibility(View.GONE);
+            String welcome_mes = "输入您的密码";
+            myTextView.setText(welcome_mes);
+            PublicData.FirstLogin=false;
+            String rootpath = getFilesDir().getPath();
+            String publictkey = rootpath + "public.key";
+            String privatekey = rootpath + "private.key";
+            RsaTool rsatool = new RsaTool();
+            try {
+                rsatool.makekeyfile(publictkey, privatekey);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            btnlogin = (Button) findViewById(R.id.BtnLogin);
-            btnlogin.setOnClickListener(new LoginClickListener());
+        }
+        btnlogin = (Button) findViewById(R.id.BtnLogin);
+        btnlogin.setOnClickListener(new LoginClickListener());
+
     }
 
     //登录监听类，用来判断密码是否正确
@@ -75,6 +79,7 @@ public class MainActivity extends Activity {
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
                     password1.setText("");
+                    finish();
                 }
                 else if (password1.getText().toString().equals(mTools.getFakePassword()))
                 {
@@ -82,6 +87,7 @@ public class MainActivity extends Activity {
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
                     password1.setText("");
+                    finish();
                 }
                 else
                 {
@@ -99,15 +105,16 @@ public class MainActivity extends Activity {
                     mTools.saveTurePassword(password1.getText().toString());
                     PublicData.LoginInTruePasswd = true;
                     password1.setText("");
-
                     Intent LoginIntent = new Intent(MainActivity.this, PowerOnActivity.class);
                     startActivity(LoginIntent);
+                    finish();
                 }
                 else
                     Toast.makeText(getApplicationContext(), "两次输入密码不一致，请重新输入！", Toast.LENGTH_LONG).show();
             }
         }
     }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
@@ -139,7 +146,7 @@ public class MainActivity extends Activity {
         }
         else
         {
-            System.exit(0);
+            finish();
         }
     }
 

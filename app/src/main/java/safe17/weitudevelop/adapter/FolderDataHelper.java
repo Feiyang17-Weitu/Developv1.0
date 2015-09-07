@@ -1,5 +1,6 @@
 package safe17.weitudevelop.adapter;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -91,7 +92,8 @@ public class FolderDataHelper extends SQLiteOpenHelper{
     //增加照片数量,第一个为数据库名称,第二个为文件夹名字，第三个为添加后的数量
     public void FolderAddNum(SQLiteDatabase db,String name,int addnum)
     {
-        String sql="update Folder set picturenum= " + (addnum+getFolderPicNum(db,name))+ " where name='"+name+"'";
+        String sql="update Folder set picturenum = " + addnum+ " where name= '"+name+"'";
+        System.out.println("SQL is:"+sql);
         db.execSQL(sql);
     }
 

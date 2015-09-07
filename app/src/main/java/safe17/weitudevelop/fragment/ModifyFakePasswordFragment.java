@@ -77,6 +77,9 @@ public class ModifyFakePasswordFragment extends Fragment
                     else {
                         mTools.saveFakePassword(newFakePasswdStr);
                         Toast.makeText(getActivity(), "修改伪密码成功！", Toast.LENGTH_LONG).show();
+                        Intent act=new Intent(getActivity(),PowerOnActivity.class);
+                        act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(act);
                     }
                 }
                 else
@@ -94,12 +97,14 @@ public class ModifyFakePasswordFragment extends Fragment
                             {
                                 Toast.makeText(getActivity(), "您输入的密码为空，请重新输入..", Toast.LENGTH_LONG).show();
                             }
-                            if(newFakePasswdStr==oldFakePasswdStr)
+                            if(mTools.getFakePassword().equals(oldFakePasswdStr))
                             {
                                 mTools.saveFakePassword(newFakePasswdStr);
                                 Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
 
-                                getActivity();
+                                Intent act=new Intent(getActivity(),PowerOnActivity.class);
+                                act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(act);
                             }
                         }
 
@@ -107,7 +112,9 @@ public class ModifyFakePasswordFragment extends Fragment
                     else
                     {
                         Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
+
                         Intent act=new Intent(getActivity(),MainActivity.class);
+                        act.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(act);
                     }
 

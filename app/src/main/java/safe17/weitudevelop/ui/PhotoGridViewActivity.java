@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -111,6 +112,7 @@ public class PhotoGridViewActivity extends Activity {
             ArrayList<String> resultData =  (ArrayList<String>) data
                     .getSerializableExtra(SelectPictureActivity.INTENT_SELECTED_PICTURE);
             selectedPicture.addAll(resultData);
+            int counter=selectedPicture.size();
             //去除重复图片
             for (int i = 0; i < selectedPicture.size() - 1; i++)
             {
@@ -119,16 +121,19 @@ public class PhotoGridViewActivity extends Activity {
                     if (selectedPicture.get(i).equals(selectedPicture.get(j))) {
                         selectedPicture.remove(j);
                         j--;
+                        counter--;
                     }
                 }
             }
 
-
             String album_name = data.getStringExtra("album_name");
+          //  Log.i("相册值：", album_name);
+            Toast.makeText(getApplicationContext(), "相册位于："+album_name+"counter:"+counter, Toast.LENGTH_LONG).show();
             FolderDataHelper Folderdb = new FolderDataHelper(getApplicationContext());
             SQLiteDatabase db=Folderdb.getReadableDatabase();
 
-            Folderdb.AddPhoto(db,album_name,selectedPicture);
+            Folderdb.AddPhoto(db, album_name, selectedPicture);
+            Folderdb.FolderAddNum(db, album_name,counter);
             // 存储
             //this.saveImgFiles();
 
@@ -185,7 +190,9 @@ public class PhotoGridViewActivity extends Activity {
         @Override
         public void onClick(View view) {
             Intent BackIntent = new Intent(PhotoGridViewActivity.this, PowerOnActivity.class);
+            BackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(BackIntent);
+            PhotoGridViewActivity.this.finish();
         }
     }
     private class OnPhotoItemClickListener implements AdapterView.OnItemClickListener {

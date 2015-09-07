@@ -114,14 +114,19 @@ public class DefaultFragment extends Fragment {
         photoList.setOnItemClickListener(new OnItemClickedListener());
         photoList.setOnItemLongClickListener(new OnItemLongClickListener());
 
-       getListData();
-       simpleAdapter = new AltColorAdapter(getActivity(), list, R.layout.photo_list,
-                new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
-        photoList.setAdapter(simpleAdapter);
         return view;
     }
 
-   private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener
+    @Override
+    public void onStart() {
+        super.onStart();
+        getListData();
+        simpleAdapter = new AltColorAdapter(getActivity(), list, R.layout.photo_list,
+                new String[]{"album_name", "photo_num"}, new int[]{R.id.album_name,R.id.photo_num});
+        photoList.setAdapter(simpleAdapter);
+    }
+
+    private class OnItemLongClickListener implements AdapterView.OnItemLongClickListener
     {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, final int position,
