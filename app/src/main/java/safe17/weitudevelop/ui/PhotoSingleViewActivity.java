@@ -11,6 +11,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import safe17.weitudevelop.R;
 import safe17.weitudevelop.tool.BitmapUtils;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 /**
  * Created by ouxuewen on 2015/9/5.
@@ -30,18 +33,21 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private android.support.v4.view.ViewPager mViewPager;
 
     private List<ImageView> imageIdList;
+    private LinearLayout title_layout;
+    private RelativeLayout bottom_layout;
+
     private int first_position;
     private Button btnDelPicture = null;
     private Button btnTransferPicture = null;
     private TextView picturePosition = null;
-    private Button btnBack = null;
+    private ImageView btnBack = null;
     private ArrayList<String> position_array = new ArrayList<String>();
-    private boolean boFullScreen = false;
+    private boolean boFullScreen = true;
+    private String strPicturePosition = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.photo_single_view);
         mViewPager = (ViewPager)findViewById(R.id.vf_photo);
 
@@ -56,16 +62,49 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         for (int i=0;i<position_array.size();i++){
             imageIdList.add(getBitmap(position_array.get(i)));
         }
-
+        title_layout = (LinearLayout)findViewById(R.id.title_layout);
+        bottom_layout = (RelativeLayout)findViewById(R.id.bottom_layout);
         picturePosition = (TextView)findViewById(R.id.picture_name);
-        String strPicturePosition = String.valueOf(first_position) + "/" + String.valueOf(position_array.size());
+        strPicturePosition = String.valueOf(first_position + 1) + "/" + String.valueOf(position_array.size());
         picturePosition.setText(strPicturePosition);
 
         mViewPager.setAdapter(new MyAdapter());
         mViewPager.setCurrentItem(first_position);
-        mViewPager.setOnPageChangeListener(this);
+        mViewPager.setOnPageChangeListener(new OnPageChangeListener() {
 
-        btnBack = (Button)findViewById(R.id.back);
+            @Override
+            public void onPageSelected(int arg0) {
+                //activity从1到2滑动，2被加载后掉用此方法
+                strPicturePosition = String.valueOf(arg0 + 1) + "/" + String.valueOf(position_array.size());
+                picturePosition.setText(strPicturePosition);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+                //从1到2滑动，在1滑动前调用
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+                //状态有三个0空闲，1是增在滑行中，2目标加载完毕
+                /**
+                 * Indicates that the pager is in an idle, settled state. The current page
+                 * is fully in view and no animation is in progress.
+                 */
+                //public static final int SCROLL_STATE_IDLE = 0;
+                /**
+                 * Indicates that the pager is currently being dragged by the user.
+                 */
+                //public static final int SCROLL_STATE_DRAGGING = 1;
+                /**
+                 * Indicates that the pager is in the process of settling to a final position.
+                 */
+                //public static final int SCROLL_STATE_SETTLING = 2;
+
+            }
+        });
+
+        btnBack = (ImageView)findViewById(R.id.back);
         btnBack.setOnClickListener(new GoBackClickListener());
 
         btnDelPicture = (Button)findViewById(R.id.del_picture);
@@ -75,32 +114,26 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private ImageView getBitmap(String fileName) {
 
         ImageView imageView  = new ImageView(this);
-        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 500));
+        imageView.setImageBitmap(BitmapUtils.decodeSampledBitmapFromFd(fileName, 800));
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!boFullScreen)
-                {
-                    btnBack.setVisibility(View.INVISIBLE);
-                    picturePosition.setVisibility(View.INVISIBLE);
-                    btnTransferPicture.setVisibility(View.INVISIBLE);
-                    btnDelPicture.setVisibility(View.INVISIBLE);
-
-                    boFullScreen = true;
+                if (boFullScreen) {
+                    title_layout.setVisibility(View.GONE);
+                    bottom_layout.setVisibility(View.GONE);
+                    boFullScreen = false;
                 }
                 else
                 {
-                    btnBack.setVisibility(View.VISIBLE);
-                    picturePosition.setVisibility(View.VISIBLE);
-                    btnTransferPicture.setVisibility(View.VISIBLE);
-                    btnDelPicture.setVisibility(View.VISIBLE);
-                    boFullScreen = false;
+                    title_layout.setVisibility(View.VISIBLE);
+                    bottom_layout.setVisibility(View.VISIBLE);
+                    boFullScreen = true;
                 }
 
-//                Toast.makeText(PhotoSingleViewActivity.this,"点击了" + mViewPager.getCurrentItem(),Toast.LENGTH_SHORT).show();
             }
         });
+
         return imageView;
     }
 
@@ -178,10 +211,9 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
 
         @Override
         public void destroyItem(View container, int position, Object object) {
-            ((ViewPager)container).removeView(imageIdList.get(position));
+            ((ViewPager) container).removeView(imageIdList.get(position));
 
         }
-
         /**
          * 载入图片进去，用当前的position 除以 图片数组长度取余数是关键
          */

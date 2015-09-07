@@ -121,6 +121,7 @@ public class AddAlbumActivity extends Activity {
                         isPrivateAlbum=true;
                         finish();
                         //Folderdb.close();
+
                     }
 
                 }
