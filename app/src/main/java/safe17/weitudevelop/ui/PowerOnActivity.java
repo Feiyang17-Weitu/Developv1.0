@@ -40,8 +40,8 @@ import safe17.weitudevelop.tool.PublicData;
 public class PowerOnActivity extends FragmentActivity implements OnItemClickListener {
 
 
-    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "关于", "退出"};
-    public static final String[] FAKETITLES = {"返回相册", "修改密码", "关于", "退出"};
+    public static final String[] TITLES = {"返回相册", "修改密码", "修改伪密码", "关于", "注销"};
+    public static final String[] FAKETITLES = {"返回相册", "修改密码", "关于", "注销"};
     private int[] imageIds = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.passwor_false,R.mipmap.about,R.mipmap.exit};
     private int[] imageIdsFake = new int[]{R.mipmap.home,R.mipmap.passowrd_true,R.mipmap.about,R.mipmap.exit};
     private DrawerLayout mDrawer_layout;//DrawerLayout容器
