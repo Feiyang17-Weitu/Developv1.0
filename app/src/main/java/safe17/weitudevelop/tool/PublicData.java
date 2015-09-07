@@ -12,7 +12,9 @@ import java.util.Map;
 public class PublicData
 {
     public static boolean FirstLogin = true;
+
     public static boolean LoginInTruePasswd = false;
+    public static boolean isMainPage=false;
     public static List<Map<String, String>> list = new ArrayList<Map<String,String>>();
 
 }

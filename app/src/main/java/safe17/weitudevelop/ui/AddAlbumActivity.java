@@ -48,7 +48,6 @@ public class AddAlbumActivity extends Activity {
             }
         });
         //----返回结束
-
         //创建相册文件夹
         InputHint=(TextView)findViewById(R.id.inputHint);
         InputAlbum=(EditText)findViewById(R.id.flodername);
@@ -111,7 +110,7 @@ public class AddAlbumActivity extends Activity {
                     }
                     else if (mTools.getTurePassword().equals(CreatedAlbumPasswd))
                     {
-                        Toast.makeText(getApplicationContext(), "伪密码和真密码重复了，请重新设置", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "您的密码重复了，请重新设置", Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -119,9 +118,8 @@ public class AddAlbumActivity extends Activity {
                         Toast.makeText(getApplicationContext(), "成功新建相册.", Toast.LENGTH_LONG).show();
                         Folderdb.AddFolder(db, CreatedAlbumName, true);
                         isPrivateAlbum=true;
-                        finish();
-                        //Folderdb.close();
 
+                        finish();
                     }
 
                 }
@@ -130,14 +128,10 @@ public class AddAlbumActivity extends Activity {
                     Toast.makeText(getApplicationContext(), "成功新建相册.", Toast.LENGTH_LONG).show();
                     Folderdb.AddFolder(db, CreatedAlbumName, false);
                     isPrivateAlbum=false;
-                    finish();
-                   // Folderdb.close();
 
+                    finish();
                 }
             }
-
-
         }
     }
-
 }

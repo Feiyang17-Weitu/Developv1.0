@@ -1,5 +1,6 @@
 package safe17.weitudevelop.fragment;
 
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.SharedPreferences;
 import android.view.View;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import safe17.weitudevelop.tool.SharePrefrencesTools;
 import safe17.weitudevelop.R;
+import safe17.weitudevelop.ui.MainActivity;
+import safe17.weitudevelop.ui.PowerOnActivity;
 
 /**
  * Created by wangxubing on 2015/8/29.
@@ -74,13 +77,17 @@ public class ModifyPasswordFragment extends Fragment
                     {
                         mTools.saveTurePassword(NewPasswdStr);
                         Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
-                        getActivity().finish();
+
+                        Intent act=new Intent(getActivity(),PowerOnActivity.class);
+                        startActivity(act);
                     }
                 }
                 else
                 {
                     Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
-                    getActivity().finish();
+
+                    Intent act=new Intent(getActivity(),MainActivity.class);
+                    startActivity(act);
                 }
 
             }
