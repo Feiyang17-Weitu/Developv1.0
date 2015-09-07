@@ -68,16 +68,19 @@ public class ModifyPasswordFragment extends Fragment
                     else if(SavedPasswdStr.equals(""))
                     {
                         Toast.makeText(getActivity(), "您输入的密码为空，请重新输入..", Toast.LENGTH_LONG).show();
+
                     }
                     else
                     {
                         mTools.saveTurePassword(NewPasswdStr);
                         Toast.makeText(getActivity(), "修改密码成功！", Toast.LENGTH_LONG).show();
+                        getActivity().finish();
                     }
                 }
                 else
                 {
                     Toast.makeText(getActivity(), "您尝试的次数过多.请仔细回忆后再次输入", Toast.LENGTH_LONG).show();
+                    getActivity().finish();
                 }
 
             }
