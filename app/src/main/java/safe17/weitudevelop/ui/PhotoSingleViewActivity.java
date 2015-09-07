@@ -42,7 +42,7 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     private TextView picturePosition = null;
     private ImageView btnBack = null;
     private ArrayList<String> position_array = new ArrayList<String>();
-    private boolean boFullScreen = false;
+    private boolean boFullScreen = true;
     private String strPicturePosition = "";
 
     @Override
@@ -119,20 +119,16 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!boFullScreen)
-                {
-
+                if (boFullScreen) {
                     title_layout.setVisibility(View.GONE);
                     bottom_layout.setVisibility(View.GONE);
-
-                    boFullScreen = true;
+                    boFullScreen = false;
                 }
                 else
                 {
                     title_layout.setVisibility(View.VISIBLE);
                     bottom_layout.setVisibility(View.VISIBLE);
-
-                    boFullScreen = false;
+                    boFullScreen = true;
                 }
 
             }
