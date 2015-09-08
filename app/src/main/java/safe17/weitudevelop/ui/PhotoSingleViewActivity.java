@@ -140,6 +140,9 @@ public class PhotoSingleViewActivity extends Activity implements ViewPager.OnPag
     class GoBackClickListener implements View.OnClickListener {
         @Override
         public void onClick(View view) {
+            Intent BackIntent = new Intent(PhotoSingleViewActivity.this, PowerOnActivity.class);
+            BackIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(BackIntent);
             PhotoSingleViewActivity.this.finish();
         }
     }
